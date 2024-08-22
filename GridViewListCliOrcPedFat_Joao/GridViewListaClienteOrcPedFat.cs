@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Microsoft.Win32;
 using WindowsFormsGridView.GridViewListCliOrcPedFat_Joao.Providers;
 using WindowsFormsGridView.GridViewListCliOrcPedFat_Joao.Providers.Faturamento;
 using WindowsFormsGridView.GridViewListCliOrcPedFat_Joao.Providers.Orcamento;
@@ -42,121 +40,44 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao
             InitializeComponent();
             SetComponents();
             InitializeLists();
-            
+            chkOrc.CheckedChanged += (object sender, System.EventArgs e) => { AtualizarEstadoCheckBoxes(chkOrc); };
 
-            chkOrc.CheckedChanged += (object sender, System.EventArgs e) =>
-            {
-                btnFiltrar.Visible = true;
-                if (chkOrc.Checked)
-                {
-                    chkPed.Enabled = false;
-                    chkFat.Enabled = false;
-                }
-                else
-                {
-                    chkPed.Enabled = true;
-                    chkFat.Enabled = true;
-                }
-            };
-            chkPed.CheckedChanged += (object sender, System.EventArgs e) =>
-            {
-                btnFiltrar.Visible = true;
-                if (chkPed.Checked)
-                {
-                    chkOrc.Enabled = false;
-                    chkFat.Enabled = false;
-                }
-                else
-                {
-                    chkOrc.Enabled = true;
-                    chkFat.Enabled = true;
-                }
-            };
-            chkFat.CheckedChanged += (object sender, System.EventArgs e) =>
-            {
-                btnFiltrar.Visible = true;
-                if (chkFat.Checked)
-                {
-                    chkOrc.Enabled = false;
-                    chkPed.Enabled = false;
-                }
-                else
-                {
-                    chkOrc.Enabled = true;
-                    chkPed.Enabled = true;
-                }
-            };
+            chkPed.CheckedChanged += (object sender, System.EventArgs e) => { AtualizarEstadoCheckBoxes(chkPed); };
 
-            btnCarregar.Click += (object sender, System.EventArgs e) =>
-            {
-                LoadClients();
-            };
-
-
+            chkFat.CheckedChanged += (object sender, System.EventArgs e) => { AtualizarEstadoCheckBoxes(chkFat); };
+            btnCarregar.Click += (object sender, System.EventArgs e) => { LoadClients(); };
             btnFiltrar.Click += (object sender, System.EventArgs e) =>
             {
                 btnDetalhes.Visible = true;
                 SetParams();
             };
-
-
             btnDetalhes.Click += async (object sender, System.EventArgs e) =>
             {
                 btnLimpar.Visible = true;
                 SetDetails();
             };
-
-
             btnLimpar.Click += (object sender, System.EventArgs e) =>
             {
-                _orcamentos.Clear();
-                dataGridView2.DataSource = null;
-                dataGridView2.Rows.Clear();
-                dataGridView2.Visible = false;
-                _orcItens.Clear();
-                dataGridView3.DataSource = null;
-                dataGridView3.Rows.Clear();
-                dataGridView3.Visible = false;
-                _orcFin.Clear();
-                dataGridView4.DataSource = null;
-                dataGridView4.Rows.Clear();
-                dataGridView4.Visible = false;
-                _pedidos.Clear();
-                dataGridView5.DataSource = null;
-                dataGridView5.Rows.Clear();
-                dataGridView5.Visible = false;
-                _pedItens.Clear();
-                dataGridView6.DataSource = null;
-                dataGridView6.Rows.Clear();
-                dataGridView6.Visible = false;
-                _pedFin.Clear();
-                dataGridView7.DataSource = null;
-                dataGridView7.Rows.Clear();
-                dataGridView7.Visible = false;
-                _faturamentos.Clear();
-                dataGridView8.DataSource = null;
-                dataGridView8.Rows.Clear();
-                dataGridView8.Visible = false;
-                _fatItens.Clear();
-                dataGridView9.DataSource = null;
-                dataGridView9.Rows.Clear();
-                dataGridView9.Visible = false;
-                _fatFin.Clear();
-                dataGridView10.DataSource = null;
-                dataGridView10.Rows.Clear();
-                dataGridView10.Visible = false;
-                label1.Visible = false;
-                label2.Visible = false;
-                label3.Visible = false;
-                label5.Visible = false;
-                label6.Visible = false;
-                chkOrc.Checked = false;
-                chkPed.Checked = false;
-                chkFat.Checked = false;
-                btnDetalhes.Visible = false;
-                btnLimpar.Visible = false;
+                LimparDataGridViews();
+                LimparLabels(label1, label2, label3, label5, label6);
+                LimparControles();
+                foreach (Control control in this.Controls)
+                {
+                    if (control is CheckBox checkBox)
+                    {
+                        checkBox.Checked = false;
+                    }
+                    else if (control is Button button)
+                    {
+                        if (button.Name == "btnDetalhes" || button.Name == "btnLimpar")
+                        {
+                            button.Visible = false;
+                        }
+                    }
+                }
             };
         }
+
         private void SetComponents()
         {
             _clienteProvider = new CliListProvider();
@@ -191,8 +112,8 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao
             {
                 SqlConnection connection = connectionManager.GetConnection();
                 _clientes = _clienteProvider.ListCliente(connection);
-                dataGridView1.DataSource = _clientes;
-                InitializeDataGridView1();
+                dataGridViewCliente.DataSource = _clientes;
+                InitializeDataGridViewCliente();
             }
         }
 
@@ -217,8 +138,8 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao
                         {
                             SqlConnection connection = connectionManager.GetConnection();
                             _orcamentos = _orcListProvider.ListOrc(connection, selectedClientIds);
-                            dataGridView2.DataSource = _orcamentos;
-                            InitializeDataGridView2();
+                            dataGridViewFiltros.DataSource = _orcamentos;
+                            InitializeDataGridViewFiltros();
                         }
                     }
 
@@ -228,8 +149,8 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao
                         {
                             SqlConnection connection = connectionManager.GetConnection();
                             _pedidos = _pedidosProvider.ListPedidos(connection, selectedClientIds);
-                            dataGridView5.DataSource = _pedidos;
-                            InitializeDataGridView5();
+                            dataGridViewFiltros.DataSource = _pedidos;
+                            InitializeDataGridViewFiltros();
                         }
                     }
 
@@ -239,8 +160,8 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao
                         {
                             SqlConnection connection = connectionManager.GetConnection();
                             _faturamentos = _faturamentosProvider.ListFaturamentos(connection, selectedClientIds);
-                            dataGridView8.DataSource = _faturamentos;
-                            InitializeDataGridView8();
+                            dataGridViewFiltros.DataSource = _faturamentos;
+                            InitializeDataGridViewFiltros();
                         }
                     }
                 }
@@ -262,7 +183,6 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao
                         }
                     }
 
-
                     if (selectedOrcIds.Any())
                     {
                         using (var connectionManager = new SqlConnManager())
@@ -275,10 +195,10 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao
                             await Task.WhenAll(taskOrcItens, taskOrcFin);
                             _orcItens = taskOrcItens.Result;
                             _orcFin = taskOrcFin.Result;
-                            dataGridView3.DataSource = _orcItens;
-                            dataGridView4.DataSource = _orcFin;
-                            InitializeDataGridView3();
-                            InitializeDataGridView4();
+                            dataGridViewItens.DataSource = _orcItens;
+                            dataGridViewFinan.DataSource = _orcFin;
+                            InitializeDataGridViewItens();
+                            InitializeDataGridViewFinan();
                         }
                     }
                 }
@@ -297,7 +217,6 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao
                         }
                     }
 
-
                     if (selectedPedIds.Any())
                     {
                         using (var connectionManager = new SqlConnManager())
@@ -311,10 +230,10 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao
                             await Task.WhenAll(taskPedItens, taskPedFin);
                             _pedItens = taskPedItens.Result;
                             _pedFin = taskPedFin.Result;
-                            dataGridView6.DataSource = _pedItens;
-                            dataGridView7.DataSource = _pedFin;
-                            InitializeDataGridView6();
-                            InitializeDataGridView7();
+                            dataGridViewItens.DataSource = _pedItens;
+                            dataGridViewFinan.DataSource = _pedFin;
+                            InitializeDataGridViewItens();
+                            InitializeDataGridViewFinan();
                         }
                     }
                 }
@@ -333,7 +252,6 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao
                         }
                     }
 
-
                     if (selectedFatIds.Any())
                     {
                         using (var connectionManager = new SqlConnManager())
@@ -346,20 +264,20 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao
                             await Task.WhenAll(taskFatItens, taskFatFin);
                             _fatItens = taskFatItens.Result;
                             _fatFin = taskFatFin.Result;
-                            dataGridView9.DataSource = _fatItens;
-                            dataGridView10.DataSource = _fatFin;
-                            InitializeDataGridView9();
-                            InitializeDataGridView10();
+                            dataGridViewItens.DataSource = _fatItens;
+                            dataGridViewFinan.DataSource = _fatFin;
+                            InitializeDataGridViewItens();
+                            InitializeDataGridViewFinan();
                         }
                     }
                 }
             }
         }
 
-        private void InitializeDataGridView1()
+        private void InitializeDataGridViewCliente()
         {
-            dataGridView1.RowHeadersVisible = false;
-            dataGridView1.Columns.Clear();
+            dataGridViewCliente.RowHeadersVisible = false;
+            dataGridViewCliente.Columns.Clear();
 
             DataGridViewCheckBoxColumn checkBoxColumn = new DataGridViewCheckBoxColumn
             {
@@ -368,7 +286,7 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao
                 DataPropertyName = "IsSelected",
                 DisplayIndex = 0
             };
-            dataGridView1.Columns.Add(checkBoxColumn);
+            dataGridViewCliente.Columns.Add(checkBoxColumn);
 
             DataGridViewTextBoxColumn codigoColumn = new DataGridViewTextBoxColumn
             {
@@ -377,7 +295,7 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao
                 DataPropertyName = "CdCliente",
                 DisplayIndex = 1
             };
-            dataGridView1.Columns.Add(codigoColumn);
+            dataGridViewCliente.Columns.Add(codigoColumn);
 
             DataGridViewTextBoxColumn razaoColumn = new DataGridViewTextBoxColumn
             {
@@ -386,27 +304,25 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao
                 DataPropertyName = "Razao",
                 DisplayIndex = 2
             };
-            dataGridView1.Columns.Add(razaoColumn);
+            dataGridViewCliente.Columns.Add(razaoColumn);
         }
 
-        private void InitializeDataGridView2()
+        private void InitializeDataGridViewFiltros()
         {
+            dataGridViewFiltros.Visible = true;
+            dataGridViewFiltros.RowHeadersVisible = false;
+            dataGridViewFiltros.Columns.Clear();
+            DataGridViewCheckBoxColumn checkBoxColumn = new DataGridViewCheckBoxColumn
+            {
+                Name = "IsSelected",
+                HeaderText = "Selecionado",
+                DataPropertyName = "IsSelected",
+                DisplayIndex = 0
+            };
+            dataGridViewFiltros.Columns.Add(checkBoxColumn);
             if (chkOrc.Checked)
             {
                 label1.Visible = true;
-                dataGridView2.Visible = true;
-                dataGridView2.RowHeadersVisible = false;
-                dataGridView2.Columns.Clear();
-
-                DataGridViewCheckBoxColumn checkBoxColumn = new DataGridViewCheckBoxColumn
-                {
-                    Name = "IsSelected",
-                    HeaderText = "Selecionado",
-                    DataPropertyName = "IsSelected",
-                    DisplayIndex = 0
-                };
-                dataGridView2.Columns.Add(checkBoxColumn);
-
                 DataGridViewTextBoxColumn numColumn = new DataGridViewTextBoxColumn
                 {
                     Name = "NumOrcamento",
@@ -414,94 +330,18 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao
                     DataPropertyName = "NumOrcamento",
                     DisplayIndex = 1
                 };
-                dataGridView2.Columns.Add(numColumn);
+                dataGridViewFiltros.Columns.Add(numColumn);
             }
-        }
-
-        private void InitializeDataGridView3()
-        {
-            if (chkOrc.Checked)
+            else
             {
-                label5.Visible = true;
-                dataGridView3.Visible = true;
-                dataGridView3.RowHeadersVisible = false;
-                dataGridView3.Columns.Clear();
-
-                DataGridViewTextBoxColumn codColumn = new DataGridViewTextBoxColumn
+                if (chkPed.Checked)
                 {
-                    Name = "CdProduto",
-                    HeaderText = "Código Produto",
-                    DataPropertyName = "CdProduto",
-                    DisplayIndex = 0
-                };
-                dataGridView3.Columns.Add(codColumn);
-
-                DataGridViewTextBoxColumn descColumn = new DataGridViewTextBoxColumn
+                    label2.Visible = true;
+                }
+                else
                 {
-                    Name = "Descricao",
-                    HeaderText = "Descricao",
-                    DataPropertyName = "Descricao",
-                    DisplayIndex = 1
-                };
-                dataGridView3.Columns.Add(descColumn);
-            }
-        }
-
-        private void InitializeDataGridView4()
-        {
-            if (chkOrc.Checked)
-            {
-                label6.Visible = true;
-                dataGridView4.Visible = true;
-                dataGridView4.RowHeadersVisible = false;
-                dataGridView4.Columns.Clear();
-
-                DataGridViewTextBoxColumn valColumn = new DataGridViewTextBoxColumn
-                {
-                    Name = "Valor",
-                    HeaderText = "Valor Total",
-                    DataPropertyName = "Valor",
-                    DisplayIndex = 1
-                };
-                dataGridView4.Columns.Add(valColumn);
-
-                DataGridViewTextBoxColumn dataColumn = new DataGridViewTextBoxColumn
-                {
-                    Name = "DataEmi",
-                    HeaderText = "Descricao",
-                    DataPropertyName = "DataEmi",
-                    DisplayIndex = 2
-                };
-                dataGridView4.Columns.Add(dataColumn);
-
-                DataGridViewTextBoxColumn tipoColumn = new DataGridViewTextBoxColumn
-                {
-                    Name = "TipoDoc",
-                    HeaderText = "Forma de Pagamento",
-                    DataPropertyName = "TipoDoc",
-                    DisplayIndex = 2
-                };
-                dataGridView4.Columns.Add(tipoColumn);
-            }
-        }
-
-        private void InitializeDataGridView5()
-        {
-            if (chkPed.Checked)
-            {
-                label2.Visible = true;
-                dataGridView5.Visible = true;
-                dataGridView5.RowHeadersVisible = false;
-                dataGridView5.Columns.Clear();
-
-                DataGridViewCheckBoxColumn checkBoxColumn = new DataGridViewCheckBoxColumn
-                {
-                    Name = "IsSelected",
-                    HeaderText = "Selecionado",
-                    DataPropertyName = "IsSelected",
-                    DisplayIndex = 0
-                };
-                dataGridView5.Columns.Add(checkBoxColumn);
+                    label3.Visible = true;
+                }
 
                 DataGridViewTextBoxColumn numColumn = new DataGridViewTextBoxColumn
                 {
@@ -510,170 +350,115 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao
                     DataPropertyName = "NumPedido",
                     DisplayIndex = 1
                 };
-                dataGridView5.Columns.Add(numColumn);
+                dataGridViewFiltros.Columns.Add(numColumn);
             }
         }
 
-        private void InitializeDataGridView6()
+        private void InitializeDataGridViewItens()
         {
-            if (chkPed.Checked)
+            label5.Visible = true;
+            dataGridViewItens.Visible = true;
+            dataGridViewItens.RowHeadersVisible = false;
+            dataGridViewItens.Columns.Clear();
+
+            DataGridViewTextBoxColumn codColumn = new DataGridViewTextBoxColumn
             {
-                label5.Visible = true;
-                dataGridView6.Visible = true;
-                dataGridView6.RowHeadersVisible = false;
-                dataGridView6.Columns.Clear();
+                Name = "CdProduto",
+                HeaderText = "Código Produto",
+                DataPropertyName = "CdProduto",
+                DisplayIndex = 0
+            };
+            dataGridViewItens.Columns.Add(codColumn);
 
-                DataGridViewTextBoxColumn codColumn = new DataGridViewTextBoxColumn
-                {
-                    Name = "CdProd",
-                    HeaderText = "Código Produto",
-                    DataPropertyName = "CdProd",
-                    DisplayIndex = 0
-                };
-                dataGridView6.Columns.Add(codColumn);
+            DataGridViewTextBoxColumn descColumn = new DataGridViewTextBoxColumn
+            {
+                Name = "Descricao",
+                HeaderText = "Descricao",
+                DataPropertyName = "Descricao",
+                DisplayIndex = 1
+            };
+            dataGridViewItens.Columns.Add(descColumn);
+        }
 
-                DataGridViewTextBoxColumn descColumn = new DataGridViewTextBoxColumn
-                {
-                    Name = "Descricao",
-                    HeaderText = "Descricao",
-                    DataPropertyName = "Descricao",
-                    DisplayIndex = 1
-                };
-                dataGridView6.Columns.Add(descColumn);
+        private void InitializeDataGridViewFinan()
+        {
+            label6.Visible = true;
+            dataGridViewFinan.Visible = true;
+            dataGridViewFinan.RowHeadersVisible = false;
+            dataGridViewFinan.Columns.Clear();
+
+            DataGridViewTextBoxColumn valColumn = new DataGridViewTextBoxColumn
+            {
+                Name = "Valor",
+                HeaderText = "Valor Total",
+                DataPropertyName = "Valor",
+                DisplayIndex = 1
+            };
+            dataGridViewFinan.Columns.Add(valColumn);
+
+            DataGridViewTextBoxColumn dataColumn = new DataGridViewTextBoxColumn
+            {
+                Name = "DataEmi",
+                HeaderText = "Descricao",
+                DataPropertyName = "DataEmi",
+                DisplayIndex = 2
+            };
+            dataGridViewFinan.Columns.Add(dataColumn);
+
+            DataGridViewTextBoxColumn tipoColumn = new DataGridViewTextBoxColumn
+            {
+                Name = "TipoDoc",
+                HeaderText = "Forma de Pagamento",
+                DataPropertyName = "TipoDoc",
+                DisplayIndex = 2
+            };
+            dataGridViewFinan.Columns.Add(tipoColumn);
+        }
+
+        private void LimparDataGridViews()
+        {
+            LimparDataGridView(dataGridViewFiltros);
+            LimparDataGridView(dataGridViewItens);
+            LimparDataGridView(dataGridViewFinan);
+        }
+
+        private void LimparDataGridView(DataGridView dataGridView)
+        {
+            dataGridView.DataSource = null;
+            dataGridView.Rows.Clear();
+            dataGridView.Visible = false;
+        }
+
+        private void LimparControles()
+        {
+            _pedidos.Clear();
+            _pedItens.Clear();
+            _pedFin.Clear();
+            _faturamentos.Clear();
+            _fatItens.Clear();
+            _fatFin.Clear();
+            _orcFin.Clear();
+            _orcItens.Clear();
+            _orcamentos.Clear();
+        }
+
+        private void LimparLabels(params Label[] labels)
+        {
+            foreach (var label in labels)
+            {
+                label.Visible = false;
             }
         }
 
-        private void InitializeDataGridView7()
+        private void AtualizarEstadoCheckBoxes(CheckBox checkboxAtivo)
         {
-            if (chkPed.Checked)
+            btnFiltrar.Visible = true;
+            foreach (var chk in new[] { chkOrc, chkPed, chkFat })
             {
-                label6.Visible = true;
-                dataGridView7.Visible = true;
-                dataGridView7.RowHeadersVisible = false;
-                dataGridView7.Columns.Clear();
-
-                DataGridViewTextBoxColumn valColumn = new DataGridViewTextBoxColumn
+                if (chk != checkboxAtivo)
                 {
-                    Name = "Valor",
-                    HeaderText = "Valor Total",
-                    DataPropertyName = "Valor",
-                    DisplayIndex = 1
-                };
-                dataGridView7.Columns.Add(valColumn);
-
-                DataGridViewTextBoxColumn dataColumn = new DataGridViewTextBoxColumn
-                {
-                    Name = "DataEmi",
-                    HeaderText = "Descricao",
-                    DataPropertyName = "DataEmi",
-                    DisplayIndex = 2
-                };
-                dataGridView7.Columns.Add(dataColumn);
-
-                DataGridViewTextBoxColumn tipoColumn = new DataGridViewTextBoxColumn
-                {
-                    Name = "TipoDoc",
-                    HeaderText = "Forma de Pagamento",
-                    DataPropertyName = "TipoDoc",
-                    DisplayIndex = 2
-                };
-                dataGridView7.Columns.Add(tipoColumn);
-            }
-        }
-
-        private void InitializeDataGridView8()
-        {
-            if (chkFat.Checked)
-            {
-                label3.Visible = true;
-                dataGridView8.Visible = true;
-                dataGridView8.RowHeadersVisible = false;
-                dataGridView8.Columns.Clear();
-
-                DataGridViewCheckBoxColumn checkBoxColumn = new DataGridViewCheckBoxColumn
-                {
-                    Name = "IsSelected",
-                    HeaderText = "Selecionado",
-                    DataPropertyName = "IsSelected",
-                    DisplayIndex = 0
-                };
-                dataGridView8.Columns.Add(checkBoxColumn);
-
-                DataGridViewTextBoxColumn numColumn = new DataGridViewTextBoxColumn
-                {
-                    Name = "NumPedido",
-                    HeaderText = "Código",
-                    DataPropertyName = "NumPedido",
-                    DisplayIndex = 1
-                };
-                dataGridView8.Columns.Add(numColumn);
-            }
-        }
-
-        private void InitializeDataGridView9()
-        {
-            if (chkFat.Checked)
-            {
-                label5.Visible = true;
-                dataGridView9.Visible = true;
-                dataGridView9.RowHeadersVisible = false;
-                dataGridView9.Columns.Clear();
-
-                DataGridViewTextBoxColumn codColumn = new DataGridViewTextBoxColumn
-                {
-                    Name = "CdProd",
-                    HeaderText = "Código Produto",
-                    DataPropertyName = "CdProd",
-                    DisplayIndex = 0
-                };
-                dataGridView9.Columns.Add(codColumn);
-
-                DataGridViewTextBoxColumn descColumn = new DataGridViewTextBoxColumn
-                {
-                    Name = "Descricao",
-                    HeaderText = "Descricao",
-                    DataPropertyName = "Descricao",
-                    DisplayIndex = 1
-                };
-                dataGridView9.Columns.Add(descColumn);
-            }
-        }
-
-        private void InitializeDataGridView10()
-        {
-            if (chkFat.Checked)
-            {
-                label6.Visible = true;
-                dataGridView10.Visible = true;
-                dataGridView10.RowHeadersVisible = false;
-                dataGridView10.Columns.Clear();
-
-                DataGridViewTextBoxColumn valColumn = new DataGridViewTextBoxColumn
-                {
-                    Name = "Valor",
-                    HeaderText = "Valor Total",
-                    DataPropertyName = "Valor",
-                    DisplayIndex = 1
-                };
-                dataGridView10.Columns.Add(valColumn);
-
-                DataGridViewTextBoxColumn dataColumn = new DataGridViewTextBoxColumn
-                {
-                    Name = "DataEmi",
-                    HeaderText = "Descricao",
-                    DataPropertyName = "DataEmi",
-                    DisplayIndex = 2
-                };
-                dataGridView10.Columns.Add(dataColumn);
-
-                DataGridViewTextBoxColumn tipoColumn = new DataGridViewTextBoxColumn
-                {
-                    Name = "TipoDoc",
-                    HeaderText = "Forma de Pagamento",
-                    DataPropertyName = "TipoDoc",
-                    DisplayIndex = 2
-                };
-                dataGridView10.Columns.Add(tipoColumn);
+                    chk.Enabled = !checkboxAtivo.Checked;
+                }
             }
         }
     }

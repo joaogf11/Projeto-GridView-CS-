@@ -8,13 +8,13 @@ namespace WindowsFormsGridView.ViewModels
 {
     public class PedFatItens
     {
-        public string CdProd { get; set; }
+        public string CdProduto { get; set; }
         public string QtdProduto {get; set; }
         public string Descricao { get; set; }
 
         public bool Equals(PedFatItens other)
         {
-            return CdProd == other.CdProd;
+            return CdProduto == other.CdProduto;
         }
     }
 }

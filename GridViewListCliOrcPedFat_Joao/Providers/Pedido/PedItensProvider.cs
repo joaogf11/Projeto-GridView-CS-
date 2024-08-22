@@ -22,7 +22,7 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao.Providers.Pedido
                 while (leitor.Read())
                 {
                     var item = new PedFatItens();
-                    item.CdProd = leitor["cdproduto"].ToString();
+                    item.CdProduto = leitor["cdproduto"].ToString();
                     item.QtdProduto = leitor["qtdproduto"].ToString();
                     item.Descricao = leitor["DsVenda"].ToString();
                     itensPedido.Add(item);

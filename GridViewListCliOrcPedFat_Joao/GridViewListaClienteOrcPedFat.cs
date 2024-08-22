@@ -55,6 +55,44 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao
             chkOrc.CheckedChanged += (object sender, System.EventArgs e) =>
             {
                 btnFiltrar.Visible = true;
+                if (chkOrc.Checked)
+                {
+                    chkPed.Enabled = false;
+                    chkFat.Enabled = false;
+                }
+                else
+                {
+                    chkPed.Enabled = true;
+                    chkFat.Enabled = true;
+                }
+            };
+            chkPed.CheckedChanged += (object sender, System.EventArgs e) =>
+            {
+                btnFiltrar.Visible = true;
+                if (chkPed.Checked)
+                {
+                    chkOrc.Enabled = false;
+                    chkFat.Enabled = false;
+                }
+                else
+                {
+                    chkOrc.Enabled = true;
+                    chkFat.Enabled = true;
+                }
+            };
+            chkFat.CheckedChanged += (object sender, System.EventArgs e) =>
+            {
+                btnFiltrar.Visible = true;
+                if (chkFat.Checked)
+                {
+                    chkOrc.Enabled = false;
+                    chkPed.Enabled = false;
+                }
+                else
+                {
+                    chkOrc.Enabled = true;
+                    chkPed.Enabled = true;
+                }
             };
 
             btnCarregar.Click += (object sender, System.EventArgs e) =>
@@ -277,6 +315,11 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao
                 label3.Visible = false;
                 label5.Visible = false;
                 label6.Visible = false;
+                chkOrc.Checked = false;
+                chkPed.Checked = false;
+                chkFat.Checked = false;
+                btnDetalhes.Visible = false;
+                btnLimpar.Visible = false;
             };
         }
 

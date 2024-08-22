@@ -105,7 +105,7 @@
             this.btnFiltrar.Name = "btnFiltrar";
             this.btnFiltrar.Size = new System.Drawing.Size(128, 29);
             this.btnFiltrar.TabIndex = 510;
-            this.btnFiltrar.Text = "Exibir Selecionados";
+            this.btnFiltrar.Text = "Exibir Selecionado";
             this.btnFiltrar.UseVisualStyleBackColor = true;
             this.btnFiltrar.Visible = false;
             // 
@@ -233,7 +233,7 @@
             // chkOrc
             // 
             this.chkOrc.AutoSize = true;
-            this.chkOrc.Location = new System.Drawing.Point(397, 70);
+            this.chkOrc.Location = new System.Drawing.Point(383, 70);
             this.chkOrc.Name = "chkOrc";
             this.chkOrc.Size = new System.Drawing.Size(111, 17);
             this.chkOrc.TabIndex = 526;
@@ -243,7 +243,7 @@
             // chkPed
             // 
             this.chkPed.AutoSize = true;
-            this.chkPed.Location = new System.Drawing.Point(397, 93);
+            this.chkPed.Location = new System.Drawing.Point(383, 93);
             this.chkPed.Name = "chkPed";
             this.chkPed.Size = new System.Drawing.Size(92, 17);
             this.chkPed.TabIndex = 527;
@@ -253,7 +253,7 @@
             // chkFat
             // 
             this.chkFat.AutoSize = true;
-            this.chkFat.Location = new System.Drawing.Point(397, 116);
+            this.chkFat.Location = new System.Drawing.Point(383, 116);
             this.chkFat.Name = "chkFat";
             this.chkFat.Size = new System.Drawing.Size(118, 17);
             this.chkFat.TabIndex = 528;

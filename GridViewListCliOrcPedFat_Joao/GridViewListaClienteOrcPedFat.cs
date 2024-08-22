@@ -50,7 +50,7 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao
         {
             InitializeComponent();
             SetComponents();
-            InitializeListClientes();
+            InitializeLists();
 
             chkOrc.CheckedChanged += (object sender, System.EventArgs e) =>
             {
@@ -658,7 +658,7 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao
             _fatFinProvider = new FatFinProvider();
         }
 
-        private void InitializeListClientes()
+        private void InitializeLists()
         {
             _clientes = new List<Cliente>();
             _orcamentos = new List<Orcamento>();

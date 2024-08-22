@@ -45,7 +45,9 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao
             chkPed.CheckedChanged += (object sender, System.EventArgs e) => { AtualizarEstadoCheckBoxes(chkPed); };
 
             chkFat.CheckedChanged += (object sender, System.EventArgs e) => { AtualizarEstadoCheckBoxes(chkFat); };
+
             btnCarregar.Click += (object sender, System.EventArgs e) => { LoadClients(); };
+
             btnFiltrar.Click += (object sender, System.EventArgs e) =>
             {
                 btnDetalhes.Visible = true;
@@ -63,16 +65,10 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao
                 LimparControles();
                 foreach (Control control in this.Controls)
                 {
-                    if (control is CheckBox checkBox)
-                    {
-                        checkBox.Checked = false;
-                    }
+                    if (control is CheckBox checkBox) { checkBox.Checked = false; }
                     else if (control is Button button)
                     {
-                        if (button.Name == "btnDetalhes" || button.Name == "btnLimpar")
-                        {
-                            button.Visible = false;
-                        }
+                        if (button.Name == "btnDetalhes" || button.Name == "btnLimpar" || button.Name == "btnFiltrar") { button.Visible = false; }
                     }
                 }
             };

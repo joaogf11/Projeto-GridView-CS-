@@ -53,15 +53,25 @@
       <DependentUpon>GridViewListaClienteOrcPedFat.cs</DependentUpon>
     </Compile>
     <Compile Include="GridViewListCliOrcPedFat_Joao\Providers\CliListProvider.cs" />
-    <Compile Include="GridViewListCliOrcPedFat_Joao\Providers\OrcFinProvider.cs" />
-    <Compile Include="GridViewListCliOrcPedFat_Joao\Providers\OrcItensProvider.cs" />
-    <Compile Include="GridViewListCliOrcPedFat_Joao\Providers\OrcListProvider.cs" />
+    <Compile Include="GridViewListCliOrcPedFat_Joao\Providers\Faturamento\FatFinProvider.cs" />
+    <Compile Include="GridViewListCliOrcPedFat_Joao\Providers\Faturamento\FatItensProvider.cs" />
+    <Compile Include="GridViewListCliOrcPedFat_Joao\Providers\Faturamento\FatListProvider.cs" />
+    <Compile Include="GridViewListCliOrcPedFat_Joao\Providers\Orcamento\OrcFinProvider.cs" />
+    <Compile Include="GridViewListCliOrcPedFat_Joao\Providers\Orcamento\OrcItensProvider.cs" />
+    <Compile Include="GridViewListCliOrcPedFat_Joao\Providers\Orcamento\OrcListProvider.cs" />
+    <Compile Include="GridViewListCliOrcPedFat_Joao\Providers\Pedido\PedFinProvider.cs" />
+    <Compile Include="GridViewListCliOrcPedFat_Joao\Providers\Pedido\PedItensProvider.cs" />
+    <Compile Include="GridViewListCliOrcPedFat_Joao\Providers\Pedido\PedListProvider.cs" />
+    <Compile Include="GridViewListCliOrcPedFat_Joao\Providers\SqlConnManager.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\Cliente.cs" />
     <Compile Include="ViewModels\Orcamento.cs" />
     <Compile Include="ViewModels\OrcFin.cs" />
     <Compile Include="ViewModels\OrcItens.cs" />
+    <Compile Include="ViewModels\PedFatFin.cs" />
+    <Compile Include="ViewModels\PedFatItens.cs" />
+    <Compile Include="ViewModels\PedidoFaturamento.cs" />
     <EmbeddedResource Include="GridViewListCliOrcPedFat_Joao\GridViewListaClienteOrcPedFat.resx">
       <DependentUpon>GridViewListaClienteOrcPedFat.cs</DependentUpon>
     </EmbeddedResource>

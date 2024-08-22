@@ -8,13 +8,13 @@ namespace WindowsFormsGridView.ViewModels
 {
     public class Orcamento
     {
-        public string NumPedido { get; set; }
+        public string NumOrcamento { get; set; }
 
         public bool IsSelected { get; set; }
 
         public bool Equals(Orcamento other)
         {
-            return NumPedido == other.NumPedido;
+            return NumOrcamento == other.NumOrcamento;
         }
     }
 }

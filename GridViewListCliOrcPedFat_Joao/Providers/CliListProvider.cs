@@ -12,20 +12,11 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao.Providers
     public class CliListProvider
     {
         
-        public List<Cliente> ListCliente()
+        public List<Cliente> ListCliente(SqlConnection connection)
         {
-            string connectionString = "Server=NBJOAO;" +
-                                      "Database=DBDEV;" +
-                                      "User ID=sa;" +
-                                      "Password=dp;";
-
+            
             List<Cliente> clientes = new List<Cliente>();
 
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                try
-                {
-                    connection.Open();
                     using (SqlCommand commands = new SqlCommand())
                     {
                         commands.Connection = connection;
@@ -42,18 +33,10 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao.Providers
                             clientes.Add(cliente);
                         }
                         leitor.Close();
-                        connection.Close();
-                    }
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e);
-                    throw;
-                }
 
-                return clientes;
             }
+            return clientes;
         }
-        
     }
 }
+

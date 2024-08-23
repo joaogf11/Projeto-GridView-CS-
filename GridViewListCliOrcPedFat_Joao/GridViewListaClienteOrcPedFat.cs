@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WindowsFormsGridView.GridViewListCliOrcPedFat_Joao.Providers;
@@ -100,6 +101,8 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao
             _faturamentos = new List<PedidoFaturamento>();
             _fatItens = new List<PedFatItens>();
             _fatFin = new List<PedFatFin>();
+
+            
         }
 
         private void LoadClients()
@@ -427,15 +430,16 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao
 
         private void LimparControles()
         {
-            _pedidos.Clear();
-            _pedItens.Clear();
-            _pedFin.Clear();
-            _faturamentos.Clear();
-            _fatItens.Clear();
-            _fatFin.Clear();
-            _orcFin.Clear();
-            _orcItens.Clear();
-            _orcamentos.Clear();
+            var campos = this.GetType().GetFields(BindingFlags.NonPublic | BindingFlags.Instance)
+                                            .Where(f => f.Name.StartsWith("_") 
+                                                        && f.FieldType.IsGenericType 
+                                                        && f.FieldType.GetGenericTypeDefinition() == typeof(List<>));
+
+            foreach (var campo in campos)
+            {
+                var lista = campo.GetValue(this) as System.Collections.IList;
+                lista?.Clear();
+            }
         }
 
         private void LimparLabels(params Label[] labels)

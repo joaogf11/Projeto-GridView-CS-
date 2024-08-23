@@ -41,11 +41,11 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao
             InitializeComponent();
             SetComponents();
             InitializeLists();
-            chkOrc.CheckedChanged += (object sender, System.EventArgs e) => { AtualizarEstadoCheckBoxes(chkOrc); };
+            chkOrc.CheckedChanged += (object sender, System.EventArgs e) => { CheckboxStateUpdate(chkOrc); };
 
-            chkPed.CheckedChanged += (object sender, System.EventArgs e) => { AtualizarEstadoCheckBoxes(chkPed); };
+            chkPed.CheckedChanged += (object sender, System.EventArgs e) => { CheckboxStateUpdate(chkPed); };
 
-            chkFat.CheckedChanged += (object sender, System.EventArgs e) => { AtualizarEstadoCheckBoxes(chkFat); };
+            chkFat.CheckedChanged += (object sender, System.EventArgs e) => { CheckboxStateUpdate(chkFat); };
 
             btnCarregar.Click += (object sender, System.EventArgs e) => { LoadClients(); };
 
@@ -61,9 +61,9 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao
             };
             btnLimpar.Click += (object sender, System.EventArgs e) =>
             {
-                LimparDataGridViews();
-                LimparLabels(label1, label2, label3, label5, label6);
-                LimparControles();
+                ClearDataGridViews();
+                ClearLabels(label1, label2, label3, label5, label6);
+                ClearControls();
                 foreach (Control control in this.Controls)
                 {
                     if (control is CheckBox checkBox) { checkBox.Checked = false; }
@@ -362,21 +362,21 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao
             dataGridViewFinan.Columns.Add(tipoColumn);
         }
 
-        private void LimparDataGridViews()
+        private void ClearDataGridViews()
         {
-            LimparDataGridView(dataGridViewFiltros);
-            LimparDataGridView(dataGridViewItens);
-            LimparDataGridView(dataGridViewFinan);
+            LayoutClearDataGridView(dataGridViewFiltros);
+            LayoutClearDataGridView(dataGridViewItens);
+            LayoutClearDataGridView(dataGridViewFinan);
         }
 
-        private void LimparDataGridView(DataGridView dataGridView)
+        private void LayoutClearDataGridView(DataGridView dataGridView)
         {
             dataGridView.DataSource = null;
             dataGridView.Rows.Clear();
             dataGridView.Visible = false;
         }
 
-        private void LimparControles()
+        private void ClearControls()
         {
             _pedidos.Clear();
             _pedItens.Clear();
@@ -389,7 +389,7 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao
             _orcamentos.Clear();
         }
 
-        private void LimparLabels(params Label[] labels)
+        private void ClearLabels(params Label[] labels)
         {
             foreach (var label in labels)
             {
@@ -397,7 +397,7 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao
             }
         }
 
-        private void AtualizarEstadoCheckBoxes(CheckBox checkboxAtivo)
+        private void CheckboxStateUpdate(CheckBox checkboxAtivo)
         {
             btnFiltrar.Visible = true;
             foreach (var chk in new[] { chkOrc, chkPed, chkFat })

@@ -431,9 +431,9 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao
         private void LimparControles()
         {
             var campos = this.GetType().GetFields(BindingFlags.NonPublic | BindingFlags.Instance)
-                                            .Where(f => f.Name.StartsWith("_") 
-                                                        && f.FieldType.IsGenericType 
-                                                        && f.FieldType.GetGenericTypeDefinition() == typeof(List<>));
+                                            .Where(l => l.Name.StartsWith("_") 
+                                                        && l.FieldType.IsGenericType 
+                                                        && l.FieldType.GetGenericTypeDefinition() == typeof(List<>));
 
             foreach (var campo in campos)
             {

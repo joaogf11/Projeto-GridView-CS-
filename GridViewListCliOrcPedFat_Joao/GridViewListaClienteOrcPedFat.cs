@@ -41,24 +41,29 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao
             InitializeComponent();
             SetComponents();
             InitializeLists();
+
             chkOrc.CheckedChanged += (object sender, System.EventArgs e) => { CheckboxStateUpdate(chkOrc); };
 
             chkPed.CheckedChanged += (object sender, System.EventArgs e) => { CheckboxStateUpdate(chkPed); };
 
             chkFat.CheckedChanged += (object sender, System.EventArgs e) => { CheckboxStateUpdate(chkFat); };
 
-            btnCarregar.Click += (object sender, System.EventArgs e) => { LoadClients(); };
+            btnCarregar.Click += (object sender, System.EventArgs e) =>
+            {
+                LoadClients();
+            };
 
             btnFiltrar.Click += (object sender, System.EventArgs e) =>
             {
-                btnDetalhes.Visible = true;
                 SetParams();
             };
+
             btnDetalhes.Click += async (object sender, System.EventArgs e) =>
             {
                 btnLimpar.Visible = true;
                 SetDetails();
             };
+
             btnLimpar.Click += (object sender, System.EventArgs e) =>
             {
                 DataGridViewsExecuteClear();
@@ -148,6 +153,7 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao
                     dataGridViewFiltros.DataSource = _faturamentos;
                 }
 
+                btnDetalhes.Visible = true;
                 InitializeDataGridViewFiltros();
             }
         }

@@ -61,7 +61,7 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao
             };
             btnLimpar.Click += (object sender, System.EventArgs e) =>
             {
-                ClearDataGridViews();
+                DataGridViewsExecuteClear();
                 ClearLabels(label1, label2, label3, label5, label6);
                 ClearControls();
                 foreach (Control control in this.Controls)
@@ -362,14 +362,14 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao
             dataGridViewFinan.Columns.Add(tipoColumn);
         }
 
-        private void ClearDataGridViews()
+        private void DataGridViewsExecuteClear()
         {
-            LayoutClearDataGridView(dataGridViewFiltros);
-            LayoutClearDataGridView(dataGridViewItens);
-            LayoutClearDataGridView(dataGridViewFinan);
+            DataGridViewCleanData(dataGridViewFiltros);
+            DataGridViewCleanData(dataGridViewItens);
+            DataGridViewCleanData(dataGridViewFinan);
         }
 
-        private void LayoutClearDataGridView(DataGridView dataGridView)
+        private void DataGridViewCleanData(DataGridView dataGridView)
         {
             dataGridView.DataSource = null;
             dataGridView.Rows.Clear();

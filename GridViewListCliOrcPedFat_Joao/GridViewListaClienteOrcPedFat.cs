@@ -102,7 +102,7 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao
             _fatItens = new List<PedFatItens>();
             _fatFin = new List<PedFatFin>();
 
-            
+
         }
 
         private void LoadClients()
@@ -118,156 +118,104 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao
 
         private void SetParams()
         {
-            if (_clientes != null && _clientes.Any())
+            if (_clientes == null || !_clientes.Any()) return;
+
+            List<string> selectedClientIds = _clientes
+                .Where(cliente => cliente.IsSelected)
+                .Select(cliente => cliente.CdCliente)
+                .ToList();
+
+            if (!selectedClientIds.Any()) return;
+
+            using (var connectionManager = new SqlConnManager())
+            using (SqlConnection connection = connectionManager.GetConnection())
             {
-                List<string> selectedClientIds = new List<string>();
-                foreach (var cliente in _clientes)
+                if (chkOrc.Checked)
                 {
-                    if (cliente.IsSelected)
-                    {
-                        selectedClientIds.Add(cliente.CdCliente);
-                    }
+                    _orcamentos = _orcListProvider.ListOrc(connection, selectedClientIds);
+                    dataGridViewFiltros.DataSource = _orcamentos;
                 }
 
-                if (selectedClientIds.Any())
+                if (chkPed.Checked)
                 {
-                    if (chkOrc.Checked)
-                    {
-                        using (var connectionManager = new SqlConnManager())
-                        {
-                            SqlConnection connection = connectionManager.GetConnection();
-                            _orcamentos = _orcListProvider.ListOrc(connection, selectedClientIds);
-                            dataGridViewFiltros.DataSource = _orcamentos;
-                            InitializeDataGridViewFiltros();
-                        }
-                    }
-
-                    if (chkPed.Checked)
-                    {
-                        using (var connectionManager = new SqlConnManager())
-                        {
-                            SqlConnection connection = connectionManager.GetConnection();
-                            _pedidos = _pedidosProvider.ListPedidos(connection, selectedClientIds);
-                            dataGridViewFiltros.DataSource = _pedidos;
-                            InitializeDataGridViewFiltros();
-                        }
-                    }
-
-                    if (chkFat.Checked)
-                    {
-                        using (var connectionManager = new SqlConnManager())
-                        {
-                            SqlConnection connection = connectionManager.GetConnection();
-                            _faturamentos = _faturamentosProvider.ListFaturamentos(connection, selectedClientIds);
-                            dataGridViewFiltros.DataSource = _faturamentos;
-                            InitializeDataGridViewFiltros();
-                        }
-                    }
+                    _pedidos = _pedidosProvider.ListPedidos(connection, selectedClientIds);
+                    dataGridViewFiltros.DataSource = _pedidos;
                 }
+
+                if (chkFat.Checked)
+                {
+                    _faturamentos = _faturamentosProvider.ListFaturamentos(connection, selectedClientIds);
+                    dataGridViewFiltros.DataSource = _faturamentos;
+                }
+
+                InitializeDataGridViewFiltros();
             }
         }
 
-        private async void SetDetails()
+        private void SetDetails()
         {
-            if (chkOrc.Checked)
+            if (_orcamentos != null && chkOrc.Checked)
             {
-                if (_orcamentos != null && _orcamentos.Any())
-                {
-                    List<string> selectedOrcIds = new List<string>();
-                    foreach (var orc in _orcamentos)
-                    {
-                        if (orc.IsSelected)
-                        {
-                            selectedOrcIds.Add(orc.NumOrcamento);
-                        }
-                    }
+                var selectedOrcIds = _orcamentos
+                    .Where(orc => orc.IsSelected)
+                    .Select(orc => orc.NumOrcamento)
+                    .ToList();
 
-                    if (selectedOrcIds.Any())
+                if (selectedOrcIds.Any())
+                {
+                    using (var connectionManager = new SqlConnManager())
                     {
-                        using (var connectionManager = new SqlConnManager())
-                        {
-                            SqlConnection connection = connectionManager.GetConnection();
-                            var taskOrcItens = Task.Run(() =>
-                                _orcItensProvider.ListOrcItens(connection, selectedOrcIds));
-                            var taskOrcFin = Task.Run(() =>
-                                _orcFinProvider.ListOrcFin(connection, selectedOrcIds));
-                            await Task.WhenAll(taskOrcItens, taskOrcFin);
-                            _orcItens = taskOrcItens.Result;
-                            _orcFin = taskOrcFin.Result;
-                            dataGridViewItens.DataSource = _orcItens;
-                            dataGridViewFinan.DataSource = _orcFin;
-                            InitializeDataGridViewItens();
-                            InitializeDataGridViewFinan();
-                        }
+                        SqlConnection connection = connectionManager.GetConnection();
+                        _orcItens = _orcItensProvider.ListOrcItens(connection, selectedOrcIds);
+                        _orcFin = _orcFinProvider.ListOrcFin(connection, selectedOrcIds);
+                        dataGridViewItens.DataSource = _orcItens;
+                        dataGridViewFinan.DataSource = _orcFin;
+                        InitializeDataGridViewItens();
+                        InitializeDataGridViewFinan();
                     }
                 }
             }
 
-            if (chkPed.Checked)
+            if (_pedidos != null && chkPed.Checked)
             {
-                if (_pedidos != null && _pedidos.Any())
-                {
-                    List<string> selectedPedIds = new List<string>();
-                    foreach (var ped in _pedidos)
-                    {
-                        if (ped.IsSelected)
-                        {
-                            selectedPedIds.Add(ped.NumPedido);
-                        }
-                    }
+                var selectedPedIds = _pedidos
+                    .Where(ped => ped.IsSelected)
+                    .Select(ped => ped.NumPedido)
+                    .ToList();
 
-                    if (selectedPedIds.Any())
+                if (selectedPedIds.Any())
+                {
+                    using (var connectionManager = new SqlConnManager())
                     {
-                        using (var connectionManager = new SqlConnManager())
-                        {
-                            Console.WriteLine(selectedPedIds.ToString());
-                            SqlConnection connection = connectionManager.GetConnection();
-                            var taskPedItens = Task.Run(() =>
-                                _pedItensProvider.ListPedItens(connection, selectedPedIds));
-                            var taskPedFin = Task.Run(() =>
-                                _pedFinProvider.ListPedFin(connection, selectedPedIds));
-                            await Task.WhenAll(taskPedItens, taskPedFin);
-                            _pedItens = taskPedItens.Result;
-                            _pedFin = taskPedFin.Result;
-                            dataGridViewItens.DataSource = _pedItens;
-                            dataGridViewFinan.DataSource = _pedFin;
-                            InitializeDataGridViewItens();
-                            InitializeDataGridViewFinan();
-                        }
+                        SqlConnection connection = connectionManager.GetConnection();
+                        _pedItens = _pedItensProvider.ListPedItens(connection, selectedPedIds);
+                        _pedFin = _pedFinProvider.ListPedFin(connection, selectedPedIds);
+                        dataGridViewItens.DataSource = _pedItens;
+                        dataGridViewFinan.DataSource = _pedFin;
+                        InitializeDataGridViewItens();
+                        InitializeDataGridViewFinan();
                     }
                 }
             }
 
-            if (chkFat.Checked)
+            if (_faturamentos != null && chkFat.Checked)
             {
-                if (_faturamentos != null && _faturamentos.Any())
-                {
-                    List<string> selectedFatIds = new List<string>();
-                    foreach (var fat in _faturamentos)
-                    {
-                        if (fat.IsSelected)
-                        {
-                            selectedFatIds.Add(fat.NumPedido);
-                        }
-                    }
+                var selectedFatIds = _faturamentos
+                    .Where(fat => fat.IsSelected)
+                    .Select(fat => fat.NumPedido)
+                    .ToList();
 
-                    if (selectedFatIds.Any())
+                if (selectedFatIds.Any())
+                {
+                    using (var connectionManager = new SqlConnManager())
                     {
-                        using (var connectionManager = new SqlConnManager())
-                        {
-                            SqlConnection connection = connectionManager.GetConnection();
-                            var taskFatItens = Task.Run(() =>
-                                _fatItensProvider.ListFatItens(connection, selectedFatIds));
-                            var taskFatFin = Task.Run(() =>
-                                _fatFinProvider.ListFatFin(connection, selectedFatIds));
-                            await Task.WhenAll(taskFatItens, taskFatFin);
-                            _fatItens = taskFatItens.Result;
-                            _fatFin = taskFatFin.Result;
-                            dataGridViewItens.DataSource = _fatItens;
-                            dataGridViewFinan.DataSource = _fatFin;
-                            InitializeDataGridViewItens();
-                            InitializeDataGridViewFinan();
-                        }
+                        SqlConnection connection = connectionManager.GetConnection();
+                        _fatItens = _fatItensProvider.ListFatItens(connection, selectedFatIds);
+                        _fatFin = _fatFinProvider.ListFatFin(connection, selectedFatIds);
+                        dataGridViewItens.DataSource = _fatItens;
+                        dataGridViewFinan.DataSource = _fatFin;
+                        InitializeDataGridViewItens();
+                        InitializeDataGridViewFinan();
                     }
                 }
             }
@@ -430,16 +378,15 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao
 
         private void LimparControles()
         {
-            var campos = this.GetType().GetFields(BindingFlags.NonPublic | BindingFlags.Instance)
-                                            .Where(l => l.Name.StartsWith("_") 
-                                                        && l.FieldType.IsGenericType 
-                                                        && l.FieldType.GetGenericTypeDefinition() == typeof(List<>));
-
-            foreach (var campo in campos)
-            {
-                var lista = campo.GetValue(this) as System.Collections.IList;
-                lista?.Clear();
-            }
+            _pedidos.Clear();
+            _pedItens.Clear();
+            _pedFin.Clear();
+            _faturamentos.Clear();
+            _fatItens.Clear();
+            _fatFin.Clear();
+            _orcFin.Clear();
+            _orcItens.Clear();
+            _orcamentos.Clear();
         }
 
         private void LimparLabels(params Label[] labels)

@@ -60,7 +60,6 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao
 
             btnDetalhes.Click += async (object sender, System.EventArgs e) =>
             {
-                btnLimpar.Visible = true;
                 SetDetails();
             };
 
@@ -176,6 +175,7 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao
                         _orcFin = _orcFinProvider.ListOrcFin(connection, selectedOrcIds);
                         dataGridViewItens.DataSource = _orcItens;
                         dataGridViewFinan.DataSource = _orcFin;
+                        btnLimpar.Visible = true;
                         InitializeDataGridViewItens();
                         InitializeDataGridViewFinan();
                     }
@@ -198,6 +198,7 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao
                         _pedFin = _pedFinProvider.ListPedFin(connection, selectedPedIds);
                         dataGridViewItens.DataSource = _pedItens;
                         dataGridViewFinan.DataSource = _pedFin;
+                        btnLimpar.Visible = true;
                         InitializeDataGridViewItens();
                         InitializeDataGridViewFinan();
                     }
@@ -220,6 +221,7 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao
                         _fatFin = _fatFinProvider.ListFatFin(connection, selectedFatIds);
                         dataGridViewItens.DataSource = _fatItens;
                         dataGridViewFinan.DataSource = _fatFin;
+                        btnLimpar.Visible = true;
                         InitializeDataGridViewItens();
                         InitializeDataGridViewFinan();
                     }

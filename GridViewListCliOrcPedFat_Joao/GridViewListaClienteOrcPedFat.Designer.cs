@@ -76,7 +76,7 @@
             // 
             // btnLimpar
             // 
-            this.btnLimpar.Location = new System.Drawing.Point(995, 527);
+            this.btnLimpar.Location = new System.Drawing.Point(982, 481);
             this.btnLimpar.Name = "btnLimpar";
             this.btnLimpar.Size = new System.Drawing.Size(128, 29);
             this.btnLimpar.TabIndex = 508;

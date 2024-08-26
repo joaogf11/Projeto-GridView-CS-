@@ -46,30 +46,21 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao
             {
                 CheckboxStateUpdate(chkOrc);
                 btnFiltrar.Visible = true;
-                if (!chkOrc.Checked)
-                {
-                    btnFiltrar.Visible = false;
-                }
+                if (!chkOrc.Checked) { btnFiltrar.Visible = false; }
             };
 
             chkPed.CheckedChanged += (object sender, System.EventArgs e) =>
             {
                 CheckboxStateUpdate(chkPed);
                 btnFiltrar.Visible = true;
-                if (!chkPed.Checked)
-                {
-                    btnFiltrar.Visible = false;
-                }
+                if (!chkPed.Checked) { btnFiltrar.Visible = false; }
             };
 
             chkFat.CheckedChanged += (object sender, System.EventArgs e) =>
             {
                 CheckboxStateUpdate(chkFat);
                 btnFiltrar.Visible = true;
-                if (!chkFat.Checked)
-                {
-                    btnFiltrar.Visible = false;
-                }
+                if (!chkFat.Checked) { btnFiltrar.Visible = false; }
             };
 
             btnCarregar.Click += (object sender, System.EventArgs e) => { LoadClients(); };
@@ -90,6 +81,9 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao
                 btnDetalhes.Visible = false;
                 btnLimpar.Visible = false;
                 btnFiltrar.Visible = false;
+
+                MessageBox.Show("Listas limpas com sucesso!");
+                
             };
         }
 
@@ -137,13 +131,13 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao
 
         private void SetParams()
         {
-            if (_clientes == null || !_clientes.Any()) return;
+            if (_clientes == null || !_clientes.Any()) { return; }
 
             List<string> selectedClientIds = _clientes.Where(cliente => cliente.IsSelected)
                 .Select(cliente => cliente.CdCliente).ToList();
 
 
-            if (!selectedClientIds.Any()) return;
+            if (!selectedClientIds.Any()) { return; }
 
             using (var connectionManager = new SqlConnManager())
             using (SqlConnection connection = connectionManager.GetConnection())
@@ -298,18 +292,9 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao
                 DisplayIndex = 2
             };
             dataGridViewFiltros.Columns.Add(clienteColumn);
-            if (chkOrc.Checked)
-            {
-                label1.Visible = true;
-            }
-            else if (chkPed.Checked)
-            {
-                label2.Visible = true;
-            }
-            else
-            {
-                label3.Visible = true;
-            }
+            if (chkOrc.Checked) { label1.Visible = true; }
+            else if (chkPed.Checked) { label2.Visible = true; }
+            else { label3.Visible = true; }
         }
 
         private void InitializeDataGridViewItens()
@@ -434,5 +419,5 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao
                 }
             }
         }
-    }
+        }
 }

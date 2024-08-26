@@ -83,20 +83,13 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao
                 DataGridViewsExecuteClear();
                 ClearLabels(label1, label2, label3, label5, label6);
                 ClearControls();
-                foreach (Control control in this.Controls)
+                foreach (CheckBox chk in groupBox1.Controls.OfType<CheckBox>())
                 {
-                    if (control is CheckBox checkBox)
-                    {
-                        checkBox.Checked = false;
-                    }
-                    else if (control is Button button)
-                    {
-                        if (button.Name == "btnDetalhes" || button.Name == "btnLimpar" || button.Name == "btnFiltrar")
-                        {
-                            button.Visible = false;
-                        }
-                    }
+                    chk.Checked = false;
                 }
+                btnDetalhes.Visible = false;
+                btnLimpar.Visible = false;
+                btnFiltrar.Visible = false;
             };
         }
 
@@ -433,7 +426,7 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao
 
         private void CheckboxStateUpdate(CheckBox checkboxAtivo)
         {
-            foreach (var chk in new[] { chkOrc, chkPed, chkFat })
+            foreach (var chk in groupBox1.Controls.OfType<CheckBox>())
             {
                 if (chk != checkboxAtivo)
                 {

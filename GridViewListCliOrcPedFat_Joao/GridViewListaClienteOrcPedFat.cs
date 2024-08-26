@@ -42,26 +42,41 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao
             SetComponents();
             InitializeLists();
 
-            chkOrc.CheckedChanged += (object sender, System.EventArgs e) => { CheckboxStateUpdate(chkOrc); };
-
-            chkPed.CheckedChanged += (object sender, System.EventArgs e) => { CheckboxStateUpdate(chkPed); };
-
-            chkFat.CheckedChanged += (object sender, System.EventArgs e) => { CheckboxStateUpdate(chkFat); };
-
-            btnCarregar.Click += (object sender, System.EventArgs e) =>
+            chkOrc.CheckedChanged += (object sender, System.EventArgs e) =>
             {
-                LoadClients();
+                CheckboxStateUpdate(chkOrc);
+                btnFiltrar.Visible = true;
+                if (!chkOrc.Checked)
+                {
+                    btnFiltrar.Visible = false;
+                }
             };
 
-            btnFiltrar.Click += (object sender, System.EventArgs e) =>
+            chkPed.CheckedChanged += (object sender, System.EventArgs e) =>
             {
-                SetParams();
+                CheckboxStateUpdate(chkPed);
+                btnFiltrar.Visible = true;
+                if (!chkPed.Checked)
+                {
+                    btnFiltrar.Visible = false;
+                }
             };
 
-            btnDetalhes.Click += async (object sender, System.EventArgs e) =>
+            chkFat.CheckedChanged += (object sender, System.EventArgs e) =>
             {
-                SetDetails();
+                CheckboxStateUpdate(chkFat);
+                btnFiltrar.Visible = true;
+                if (!chkFat.Checked)
+                {
+                    btnFiltrar.Visible = false;
+                }
             };
+
+            btnCarregar.Click += (object sender, System.EventArgs e) => { LoadClients(); };
+
+            btnFiltrar.Click += (object sender, System.EventArgs e) => { SetParams(); };
+
+            btnDetalhes.Click += async (object sender, System.EventArgs e) => { SetDetails(); };
 
             btnLimpar.Click += (object sender, System.EventArgs e) =>
             {
@@ -70,10 +85,16 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao
                 ClearControls();
                 foreach (Control control in this.Controls)
                 {
-                    if (control is CheckBox checkBox) { checkBox.Checked = false; }
+                    if (control is CheckBox checkBox)
+                    {
+                        checkBox.Checked = false;
+                    }
                     else if (control is Button button)
                     {
-                        if (button.Name == "btnDetalhes" || button.Name == "btnLimpar" || button.Name == "btnFiltrar") { button.Visible = false; }
+                        if (button.Name == "btnDetalhes" || button.Name == "btnLimpar" || button.Name == "btnFiltrar")
+                        {
+                            button.Visible = false;
+                        }
                     }
                 }
             };
@@ -105,8 +126,6 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao
             _faturamentos = new List<OrcamentoPedidoFaturamento>();
             _fatItens = new List<Itens>();
             _fatFin = new List<Finan>();
-
-
         }
 
         private void LoadClients()
@@ -117,6 +136,9 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao
                 _clientes = _clienteProvider.ListCliente(connection);
                 dataGridViewCliente.DataSource = _clientes;
                 InitializeDataGridViewCliente();
+                chkOrc.Enabled = true;
+                chkPed.Enabled = true;
+                chkFat.Enabled = true;
             }
         }
 
@@ -124,10 +146,9 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao
         {
             if (_clientes == null || !_clientes.Any()) return;
 
-            List<string> selectedClientIds = _clientes
-                .Where(cliente => cliente.IsSelected)
-                .Select(cliente => cliente.CdCliente)
-                .ToList();
+            List<string> selectedClientIds = _clientes.Where(cliente => cliente.IsSelected)
+                .Select(cliente => cliente.CdCliente).ToList();
+
 
             if (!selectedClientIds.Any()) return;
 
@@ -161,10 +182,7 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao
         {
             if (_orcamentos != null && chkOrc.Checked)
             {
-                var selectedOrcIds = _orcamentos
-                    .Where(orc => orc.IsSelected)
-                    .Select(orc => orc.NumPedido)
-                    .ToList();
+                var selectedOrcIds = _orcamentos.Where(orc => orc.IsSelected).Select(orc => orc.NumPedido).ToList();
 
                 if (selectedOrcIds.Any())
                 {
@@ -184,10 +202,7 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao
 
             if (_pedidos != null && chkPed.Checked)
             {
-                var selectedPedIds = _pedidos
-                    .Where(ped => ped.IsSelected)
-                    .Select(ped => ped.NumPedido)
-                    .ToList();
+                var selectedPedIds = _pedidos.Where(ped => ped.IsSelected).Select(ped => ped.NumPedido).ToList();
 
                 if (selectedPedIds.Any())
                 {
@@ -207,10 +222,7 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao
 
             if (_faturamentos != null && chkFat.Checked)
             {
-                var selectedFatIds = _faturamentos
-                    .Where(fat => fat.IsSelected)
-                    .Select(fat => fat.NumPedido)
-                    .ToList();
+                var selectedFatIds = _faturamentos.Where(fat => fat.IsSelected).Select(fat => fat.NumPedido).ToList();
 
                 if (selectedFatIds.Any())
                 {
@@ -421,7 +433,6 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao
 
         private void CheckboxStateUpdate(CheckBox checkboxAtivo)
         {
-            btnFiltrar.Visible = true;
             foreach (var chk in new[] { chkOrc, chkPed, chkFat })
             {
                 if (chk != checkboxAtivo)

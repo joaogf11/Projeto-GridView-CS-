@@ -15,32 +15,24 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao
 {
     public partial class GridViewListaClienteOrcPedFat : Form
     {
-        private List<Cliente> _clientes;
-        private CliListProvider _clienteProvider;
-        private List<OrcamentoPedidoFaturamento> _orcamentos;
-        private OrcListProvider _orcListProvider;
-        private List<Itens> _orcItens;
-        private OrcItensProvider _orcItensProvider;
-        private List<Finan> _orcFin;
-        private OrcFinProvider _orcFinProvider;
-        private List<OrcamentoPedidoFaturamento> _pedidos;
-        private PedListProvider _pedidosProvider;
-        private List<Itens> _pedItens;
-        private PedItensProvider _pedItensProvider;
-        private List<Finan> _pedFin;
-        private PedFinProvider _pedFinProvider;
-        private List<OrcamentoPedidoFaturamento> _faturamentos;
-        private FatListProvider _faturamentosProvider;
-        private List<Itens> _fatItens;
-        private FatItensProvider _fatItensProvider;
-        private List<Finan> _fatFin;
-        private FatFinProvider _fatFinProvider;
+        private List<Cliente> _clientes = new List<Cliente>();
+        private List<OrcamentoPedidoFaturamento> _orcpedfat = new List<OrcamentoPedidoFaturamento>();
+        private List<Itens> _Itens = new List<Itens>();
+        private List<Finan> _Fin = new List<Finan>();
+        private CliListProvider _clienteProvider = new CliListProvider();
+        private OrcItensProvider _orcItensProvider = new OrcItensProvider();
+        private OrcListProvider _orcListProvider = new OrcListProvider();
+        private OrcFinProvider _orcFinProvider = new OrcFinProvider();
+        private PedListProvider _pedidosProvider = new PedListProvider();
+        private PedItensProvider _pedItensProvider = new PedItensProvider();
+        private PedFinProvider _pedFinProvider = new PedFinProvider();
+        private FatListProvider _faturamentosProvider = new FatListProvider();
+        private FatItensProvider _fatItensProvider = new FatItensProvider();
+        private FatFinProvider _fatFinProvider = new FatFinProvider();
 
         public GridViewListaClienteOrcPedFat()
         {
             InitializeComponent();
-            SetComponents();
-            InitializeLists();
 
             chkOrc.CheckedChanged += (object sender, System.EventArgs e) =>
             {
@@ -86,35 +78,6 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao
                 
             };
         }
-
-        private void SetComponents()
-        {
-            _clienteProvider = new CliListProvider();
-            _orcListProvider = new OrcListProvider();
-            _orcItensProvider = new OrcItensProvider();
-            _orcFinProvider = new OrcFinProvider();
-            _pedidosProvider = new PedListProvider();
-            _pedItensProvider = new PedItensProvider();
-            _pedFinProvider = new PedFinProvider();
-            _faturamentosProvider = new FatListProvider();
-            _fatItensProvider = new FatItensProvider();
-            _fatFinProvider = new FatFinProvider();
-        }
-
-        private void InitializeLists()
-        {
-            _clientes = new List<Cliente>();
-            _orcamentos = new List<OrcamentoPedidoFaturamento>();
-            _orcItens = new List<Itens>();
-            _orcFin = new List<Finan>();
-            _pedidos = new List<OrcamentoPedidoFaturamento>();
-            _pedItens = new List<Itens>();
-            _pedFin = new List<Finan>();
-            _faturamentos = new List<OrcamentoPedidoFaturamento>();
-            _fatItens = new List<Itens>();
-            _fatFin = new List<Finan>();
-        }
-
         private void LoadClients()
         {
             using (var connectionManager = new SqlConnManager())
@@ -144,20 +107,20 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao
             {
                 if (chkOrc.Checked)
                 {
-                    _orcamentos = _orcListProvider.ListOrc(connection, selectedClientIds);
-                    dataGridViewFiltros.DataSource = _orcamentos;
+                    _orcpedfat = _orcListProvider.ListOrc(connection, selectedClientIds);
+                    dataGridViewFiltros.DataSource = _orcpedfat;
                 }
 
                 if (chkPed.Checked)
                 {
-                    _pedidos = _pedidosProvider.ListPedidos(connection, selectedClientIds);
-                    dataGridViewFiltros.DataSource = _pedidos;
+                    _orcpedfat = _pedidosProvider.ListPedidos(connection, selectedClientIds);
+                    dataGridViewFiltros.DataSource = _orcpedfat;
                 }
 
                 if (chkFat.Checked)
                 {
-                    _faturamentos = _faturamentosProvider.ListFaturamentos(connection, selectedClientIds);
-                    dataGridViewFiltros.DataSource = _faturamentos;
+                    _orcpedfat = _faturamentosProvider.ListFaturamentos(connection, selectedClientIds);
+                    dataGridViewFiltros.DataSource = _orcpedfat;
                 }
 
                 btnDetalhes.Visible = true;
@@ -167,19 +130,19 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao
 
         private void SetDetails()
         {
-            if (_orcamentos != null && chkOrc.Checked)
+            if (_orcpedfat != null && chkOrc.Checked)
             {
-                var selectedOrcIds = _orcamentos.Where(orc => orc.IsSelected).Select(orc => orc.NumPedido).ToList();
+                var selectedOrcIds = _orcpedfat.Where(orc => orc.IsSelected).Select(orc => orc.NumPedido).ToList();
 
                 if (selectedOrcIds.Any())
                 {
                     using (var connectionManager = new SqlConnManager())
                     {
                         SqlConnection connection = connectionManager.GetConnection();
-                        _orcItens = _orcItensProvider.ListOrcItens(connection, selectedOrcIds);
-                        _orcFin = _orcFinProvider.ListOrcFin(connection, selectedOrcIds);
-                        dataGridViewItens.DataSource = _orcItens;
-                        dataGridViewFinan.DataSource = _orcFin;
+                        _Itens = _orcItensProvider.ListOrcItens(connection, selectedOrcIds);
+                        _Fin = _orcFinProvider.ListOrcFin(connection, selectedOrcIds);
+                        dataGridViewItens.DataSource = _Itens;
+                        dataGridViewFinan.DataSource = _Fin;
                         btnLimpar.Visible = true;
                         InitializeDataGridViewItens();
                         InitializeDataGridViewFinan();
@@ -187,19 +150,19 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao
                 }
             }
 
-            if (_pedidos != null && chkPed.Checked)
+            if (_orcpedfat != null && chkPed.Checked)
             {
-                var selectedPedIds = _pedidos.Where(ped => ped.IsSelected).Select(ped => ped.NumPedido).ToList();
+                var selectedPedIds = _orcpedfat.Where(ped => ped.IsSelected).Select(ped => ped.NumPedido).ToList();
 
                 if (selectedPedIds.Any())
                 {
                     using (var connectionManager = new SqlConnManager())
                     {
                         SqlConnection connection = connectionManager.GetConnection();
-                        _pedItens = _pedItensProvider.ListPedItens(connection, selectedPedIds);
-                        _pedFin = _pedFinProvider.ListPedFin(connection, selectedPedIds);
-                        dataGridViewItens.DataSource = _pedItens;
-                        dataGridViewFinan.DataSource = _pedFin;
+                        _Itens = _pedItensProvider.ListPedItens(connection, selectedPedIds);
+                        _Fin = _pedFinProvider.ListPedFin(connection, selectedPedIds);
+                        dataGridViewItens.DataSource = _Itens;
+                        dataGridViewFinan.DataSource = _Fin;
                         btnLimpar.Visible = true;
                         InitializeDataGridViewItens();
                         InitializeDataGridViewFinan();
@@ -207,19 +170,19 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao
                 }
             }
 
-            if (_faturamentos != null && chkFat.Checked)
+            if (_orcpedfat != null && chkFat.Checked)
             {
-                var selectedFatIds = _faturamentos.Where(fat => fat.IsSelected).Select(fat => fat.NumPedido).ToList();
+                var selectedFatIds = _orcpedfat.Where(fat => fat.IsSelected).Select(fat => fat.NumPedido).ToList();
 
                 if (selectedFatIds.Any())
                 {
                     using (var connectionManager = new SqlConnManager())
                     {
                         SqlConnection connection = connectionManager.GetConnection();
-                        _fatItens = _fatItensProvider.ListFatItens(connection, selectedFatIds);
-                        _fatFin = _fatFinProvider.ListFatFin(connection, selectedFatIds);
-                        dataGridViewItens.DataSource = _fatItens;
-                        dataGridViewFinan.DataSource = _fatFin;
+                        _Itens = _fatItensProvider.ListFatItens(connection, selectedFatIds);
+                        _Fin = _fatFinProvider.ListFatFin(connection, selectedFatIds);
+                        dataGridViewItens.DataSource = _Itens;
+                        dataGridViewFinan.DataSource = _Fin;
                         btnLimpar.Visible = true;
                         InitializeDataGridViewItens();
                         InitializeDataGridViewFinan();
@@ -390,15 +353,9 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao
 
         private void ClearControls()
         {
-            _pedidos.Clear();
-            _pedItens.Clear();
-            _pedFin.Clear();
-            _faturamentos.Clear();
-            _fatItens.Clear();
-            _fatFin.Clear();
-            _orcFin.Clear();
-            _orcItens.Clear();
-            _orcamentos.Clear();
+            _orcpedfat.Clear();
+            _Itens.Clear();
+            _Fin.Clear();
         }
 
         private void ClearLabels(params Label[] labels)

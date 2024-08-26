@@ -17,23 +17,23 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao
     {
         private List<Cliente> _clientes;
         private CliListProvider _clienteProvider;
-        private List<Orcamento> _orcamentos;
+        private List<OrcamentoPedidoFaturamento> _orcamentos;
         private OrcListProvider _orcListProvider;
-        private List<OrcItens> _orcItens;
+        private List<Itens> _orcItens;
         private OrcItensProvider _orcItensProvider;
-        private List<OrcFin> _orcFin;
+        private List<Finan> _orcFin;
         private OrcFinProvider _orcFinProvider;
-        private List<PedidoFaturamento> _pedidos;
+        private List<OrcamentoPedidoFaturamento> _pedidos;
         private PedListProvider _pedidosProvider;
-        private List<PedFatItens> _pedItens;
+        private List<Itens> _pedItens;
         private PedItensProvider _pedItensProvider;
-        private List<PedFatFin> _pedFin;
+        private List<Finan> _pedFin;
         private PedFinProvider _pedFinProvider;
-        private List<PedidoFaturamento> _faturamentos;
+        private List<OrcamentoPedidoFaturamento> _faturamentos;
         private FatListProvider _faturamentosProvider;
-        private List<PedFatItens> _fatItens;
+        private List<Itens> _fatItens;
         private FatItensProvider _fatItensProvider;
-        private List<PedFatFin> _fatFin;
+        private List<Finan> _fatFin;
         private FatFinProvider _fatFinProvider;
 
         public GridViewListaClienteOrcPedFat()
@@ -96,15 +96,15 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao
         private void InitializeLists()
         {
             _clientes = new List<Cliente>();
-            _orcamentos = new List<Orcamento>();
-            _orcItens = new List<OrcItens>();
-            _orcFin = new List<OrcFin>();
-            _pedidos = new List<PedidoFaturamento>();
-            _pedItens = new List<PedFatItens>();
-            _pedFin = new List<PedFatFin>();
-            _faturamentos = new List<PedidoFaturamento>();
-            _fatItens = new List<PedFatItens>();
-            _fatFin = new List<PedFatFin>();
+            _orcamentos = new List<OrcamentoPedidoFaturamento>();
+            _orcItens = new List<Itens>();
+            _orcFin = new List<Finan>();
+            _pedidos = new List<OrcamentoPedidoFaturamento>();
+            _pedItens = new List<Itens>();
+            _pedFin = new List<Finan>();
+            _faturamentos = new List<OrcamentoPedidoFaturamento>();
+            _fatItens = new List<Itens>();
+            _fatFin = new List<Finan>();
 
 
         }
@@ -163,7 +163,7 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao
             {
                 var selectedOrcIds = _orcamentos
                     .Where(orc => orc.IsSelected)
-                    .Select(orc => orc.NumOrcamento)
+                    .Select(orc => orc.NumPedido)
                     .ToList();
 
                 if (selectedOrcIds.Any())
@@ -267,6 +267,7 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao
             dataGridViewFiltros.Visible = true;
             dataGridViewFiltros.RowHeadersVisible = false;
             dataGridViewFiltros.Columns.Clear();
+
             DataGridViewCheckBoxColumn checkBoxColumn = new DataGridViewCheckBoxColumn
             {
                 Name = "IsSelected",
@@ -275,37 +276,34 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao
                 DisplayIndex = 0
             };
             dataGridViewFiltros.Columns.Add(checkBoxColumn);
+            DataGridViewTextBoxColumn numColumn = new DataGridViewTextBoxColumn
+            {
+                Name = "NumPedido",
+                HeaderText = "Código",
+                DataPropertyName = "NumPedido",
+                DisplayIndex = 1
+            };
+            dataGridViewFiltros.Columns.Add(numColumn);
+
+            DataGridViewTextBoxColumn clienteColumn = new DataGridViewTextBoxColumn
+            {
+                Name = "Cliente",
+                HeaderText = "Cliente",
+                DataPropertyName = "Cliente",
+                DisplayIndex = 2
+            };
+            dataGridViewFiltros.Columns.Add(clienteColumn);
             if (chkOrc.Checked)
             {
                 label1.Visible = true;
-                DataGridViewTextBoxColumn numColumn = new DataGridViewTextBoxColumn
-                {
-                    Name = "NumOrcamento",
-                    HeaderText = "Código",
-                    DataPropertyName = "NumOrcamento",
-                    DisplayIndex = 1
-                };
-                dataGridViewFiltros.Columns.Add(numColumn);
+            }
+            else if (chkPed.Checked)
+            {
+                label2.Visible = true;
             }
             else
             {
-                if (chkPed.Checked)
-                {
-                    label2.Visible = true;
-                }
-                else
-                {
-                    label3.Visible = true;
-                }
-
-                DataGridViewTextBoxColumn numColumn = new DataGridViewTextBoxColumn
-                {
-                    Name = "NumPedido",
-                    HeaderText = "Código",
-                    DataPropertyName = "NumPedido",
-                    DisplayIndex = 1
-                };
-                dataGridViewFiltros.Columns.Add(numColumn);
+                label3.Visible = true;
             }
         }
 
@@ -333,6 +331,14 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao
                 DisplayIndex = 1
             };
             dataGridViewItens.Columns.Add(descColumn);
+            DataGridViewTextBoxColumn clienteColumn = new DataGridViewTextBoxColumn
+            {
+                Name = "NumPed",
+                HeaderText = "Número",
+                DataPropertyName = "NumPed",
+                DisplayIndex = 2
+            };
+            dataGridViewItens.Columns.Add(clienteColumn);
         }
 
         private void InitializeDataGridViewFinan()
@@ -365,9 +371,17 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao
                 Name = "TipoDoc",
                 HeaderText = "Forma de Pagamento",
                 DataPropertyName = "TipoDoc",
-                DisplayIndex = 2
+                DisplayIndex = 3
             };
             dataGridViewFinan.Columns.Add(tipoColumn);
+            DataGridViewTextBoxColumn clienteColumn = new DataGridViewTextBoxColumn
+            {
+                Name = "NumPed",
+                HeaderText = "Número",
+                DataPropertyName = "NumPed",
+                DisplayIndex = 4
+            };
+            dataGridViewFinan.Columns.Add(clienteColumn);
         }
 
         private void DataGridViewsExecuteClear()

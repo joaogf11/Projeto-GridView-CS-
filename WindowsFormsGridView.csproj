@@ -69,12 +69,9 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\Cliente.cs" />
-    <Compile Include="ViewModels\Orcamento.cs" />
-    <Compile Include="ViewModels\OrcFin.cs" />
-    <Compile Include="ViewModels\OrcItens.cs" />
-    <Compile Include="ViewModels\PedFatFin.cs" />
-    <Compile Include="ViewModels\PedFatItens.cs" />
-    <Compile Include="ViewModels\PedidoFaturamento.cs" />
+    <Compile Include="ViewModels\Finan.cs" />
+    <Compile Include="ViewModels\Itens.cs" />
+    <Compile Include="ViewModels\OrcamentoPedidoFaturamento.cs" />
     <EmbeddedResource Include="GridViewListCliOrcPedFat_Joao\GridViewListaClienteOrcPedFat.resx">
       <DependentUpon>GridViewListaClienteOrcPedFat.cs</DependentUpon>
     </EmbeddedResource>

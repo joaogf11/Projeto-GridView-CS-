@@ -6,11 +6,14 @@ using System.Threading.Tasks;
 
 namespace WindowsFormsGridView.ViewModels
 {
-    public class OrcItens
+    public class Itens
     {
         public string CdProduto { get; set; }
+        public string QtdProduto { get; set; }
         public string Descricao { get; set; }
-        public bool Equals(OrcItens other)
+        public string NumPed { get; set; }
+
+        public bool Equals(Itens other)
         {
             return CdProduto == other.CdProduto;
         }

@@ -10,25 +10,26 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao.Providers.Faturamen
 {
     public class FatFinProvider
     {
-        public List<PedFatFin> ListFatFin(SqlConnection connection, List<string> faturamentosIds)
+        public List<Finan> ListFatFin(SqlConnection connection, List<string> faturamentosIds)
         {
-            List<PedFatFin> finanFaturamento = new List<PedFatFin>();
+            List<Finan> finanFaturamento = new List<Finan>();
 
             using (SqlCommand commands = new SqlCommand())
             {
                 commands.Connection = connection;
                 string faturamentosFilter = string.Join(",", faturamentosIds.Select(NumPedidoo => $"'{NumPedidoo}'"));
-                commands.CommandText = $"SELECT valorr, dtemissao, dsdocquit FROM PagarReceber " +
+                commands.CommandText = $"SELECT valorr, dtemissao, dsdocquit,SUBSTRING(numlancto, 3, 2) AS 'num' FROM PagarReceber " +
                                        $"INNER JOIN DocQuitacao ON DocQuitacao.tpdocquit = PagarReceber.tpdocquit " +
                                        $"WHERE SUBSTRING(numlancto, 3, 2) IN ({faturamentosFilter})";
                 SqlDataReader leitor = commands.ExecuteReader();
 
                 while (leitor.Read())
                 {
-                    var financeiro = new PedFatFin();
+                    var financeiro = new Finan();
                     financeiro.TipoDoc = leitor["dsdocquit"].ToString();
                     financeiro.Valor = leitor["valorr"].ToString();
                     financeiro.DataEmi = leitor["dtemissao"].ToString();
+                    financeiro.NumPed = leitor["num"].ToString();
                     finanFaturamento.Add(financeiro);
                 }
                 leitor.Close();

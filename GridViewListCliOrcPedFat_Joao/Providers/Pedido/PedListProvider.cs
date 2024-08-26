@@ -7,22 +7,23 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao.Providers.Pedido
 {
     public class PedListProvider
     {
-        public List<PedidoFaturamento> ListPedidos(SqlConnection connection, List<string> clienteIds)
+        public List<OrcamentoPedidoFaturamento> ListPedidos(SqlConnection connection, List<string> clienteIds)
         {
-            List<PedidoFaturamento> pedidos = new List<PedidoFaturamento>();
+            List<OrcamentoPedidoFaturamento> pedidos = new List<OrcamentoPedidoFaturamento>();
 
             using (SqlCommand commands = new SqlCommand())
             {
                 commands.Connection = connection;
                 string clientesFilter = string.Join(",", clienteIds.Select(cdcliente => $"'{cdcliente}'"));
-                commands.CommandText = $"SELECT NumPedido, DtPedido FROM Pedido " +
+                commands.CommandText = $"SELECT NumPedido, DtPedido, cdcliente FROM Pedido " +
                                        $"WHERE DtFaturamento IS NULL AND CdCliente IN ({clientesFilter}) ";
                 SqlDataReader leitor = commands.ExecuteReader();
 
                 while (leitor.Read())
                 {
-                    var pedido = new PedidoFaturamento();
+                    var pedido = new OrcamentoPedidoFaturamento();
                     pedido.NumPedido = leitor["NumPedido"].ToString();
+                    pedido.Cliente = leitor["cdcliente"].ToString();
                     pedidos.Add(pedido);
                 }
                 leitor.Close();

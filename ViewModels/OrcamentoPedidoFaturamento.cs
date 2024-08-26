@@ -6,15 +6,12 @@ using System.Threading.Tasks;
 
 namespace WindowsFormsGridView.ViewModels
 {
-    public class PedidoFaturamento
+    public class OrcamentoPedidoFaturamento
     {
         public string NumPedido { get; set; }
-        public string DataPedido { get; set; }
-        public string DataFaturamento { get; set; }
-
+        public string Cliente { get; set; }
         public bool IsSelected { get; set; }
-
-        public bool Equals(PedidoFaturamento other)
+        public bool Equals(OrcamentoPedidoFaturamento other)
         {
             return NumPedido == other.NumPedido;
         }

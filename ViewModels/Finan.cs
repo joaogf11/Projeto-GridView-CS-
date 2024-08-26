@@ -6,15 +6,17 @@ using System.Threading.Tasks;
 
 namespace WindowsFormsGridView.ViewModels
 {
-    public class OrcFin
+    public class Finan
     {
         public string Valor { get; set; }
         public string DataEmi { get; set; }
         public string TipoDoc { get; set; }
+        public string NumPed { get; set; }
 
-        public bool Equals(OrcFin other)
+        public bool Equals(Finan other)
         {
             return Valor == other.Valor;
         }
+
     }
 }

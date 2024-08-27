@@ -110,6 +110,9 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao
             btnLimpar.Click += (object sender, System.EventArgs e) =>
             {
                 DataGridViewsExecuteClear();
+                dataGridViewCliente.Enabled = false;
+                dataGridViewCliente.DataSource = null;
+                dataGridViewCliente.Rows.Clear();
                 ClearLabels(label1, label2, label3, label5, label6);
                 ClearControls();
                 foreach (CheckBox chk in groupBox1.Controls.OfType<CheckBox>())

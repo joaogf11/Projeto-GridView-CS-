@@ -122,12 +122,12 @@
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel3.Controls.Add(this.dataGridViewFinan, 0, 0);
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(740, 27);
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(820, 27);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 1;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 213F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(356, 213);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(394, 213);
             this.tableLayoutPanel3.TabIndex = 547;
             // 
             // dataGridViewFinan
@@ -136,7 +136,7 @@
             this.dataGridViewFinan.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridViewFinan.Location = new System.Drawing.Point(3, 3);
             this.dataGridViewFinan.Name = "dataGridViewFinan";
-            this.dataGridViewFinan.Size = new System.Drawing.Size(350, 207);
+            this.dataGridViewFinan.Size = new System.Drawing.Size(388, 207);
             this.dataGridViewFinan.TabIndex = 519;
             this.dataGridViewFinan.Visible = false;
             // 
@@ -145,12 +145,12 @@
             this.tableLayoutPanel2.ColumnCount = 1;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel2.Controls.Add(this.dataGridViewItens, 0, 0);
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(375, 27);
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(420, 27);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 213F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(362, 213);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(394, 213);
             this.tableLayoutPanel2.TabIndex = 546;
             // 
             // dataGridViewItens
@@ -159,7 +159,7 @@
             this.dataGridViewItens.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridViewItens.Location = new System.Drawing.Point(3, 3);
             this.dataGridViewItens.Name = "dataGridViewItens";
-            this.dataGridViewItens.Size = new System.Drawing.Size(356, 207);
+            this.dataGridViewItens.Size = new System.Drawing.Size(388, 207);
             this.dataGridViewItens.TabIndex = 512;
             this.dataGridViewItens.Visible = false;
             // 
@@ -173,7 +173,7 @@
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 213F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(365, 213);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(397, 213);
             this.tableLayoutPanel1.TabIndex = 545;
             // 
             // dataGridViewFiltros
@@ -182,14 +182,14 @@
             this.dataGridViewFiltros.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridViewFiltros.Location = new System.Drawing.Point(3, 3);
             this.dataGridViewFiltros.Name = "dataGridViewFiltros";
-            this.dataGridViewFiltros.Size = new System.Drawing.Size(359, 207);
+            this.dataGridViewFiltros.Size = new System.Drawing.Size(391, 207);
             this.dataGridViewFiltros.TabIndex = 521;
             this.dataGridViewFiltros.Visible = false;
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(740, 11);
+            this.label6.Location = new System.Drawing.Point(820, 11);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(56, 13);
             this.label6.TabIndex = 544;
@@ -199,7 +199,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(384, 11);
+            this.label5.Location = new System.Drawing.Point(420, 11);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(30, 13);
             this.label5.TabIndex = 543;
@@ -259,7 +259,7 @@
             // btnLimpar
             // 
             this.btnLimpar.Enabled = false;
-            this.btnLimpar.Location = new System.Drawing.Point(965, 246);
+            this.btnLimpar.Location = new System.Drawing.Point(1083, 243);
             this.btnLimpar.Name = "btnLimpar";
             this.btnLimpar.Size = new System.Drawing.Size(128, 29);
             this.btnLimpar.TabIndex = 537;
@@ -272,7 +272,7 @@
             this.dataGridViewCliente.Enabled = false;
             this.dataGridViewCliente.Location = new System.Drawing.Point(6, 19);
             this.dataGridViewCliente.Name = "dataGridViewCliente";
-            this.dataGridViewCliente.Size = new System.Drawing.Size(314, 128);
+            this.dataGridViewCliente.Size = new System.Drawing.Size(287, 128);
             this.dataGridViewCliente.TabIndex = 535;
             // 
             // chkCliente
@@ -379,7 +379,7 @@
             this.groupBox3.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBox3.Location = new System.Drawing.Point(3, 3);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(1110, 323);
+            this.groupBox3.Size = new System.Drawing.Size(1221, 323);
             this.groupBox3.TabIndex = 559;
             this.groupBox3.TabStop = false;
             // 
@@ -398,7 +398,7 @@
             this.groupBox5.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBox5.Location = new System.Drawing.Point(3, 332);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(1110, 285);
+            this.groupBox5.Size = new System.Drawing.Size(1221, 285);
             this.groupBox5.TabIndex = 560;
             this.groupBox5.TabStop = false;
             // 
@@ -414,14 +414,14 @@
             this.tableLayoutPanel4.RowCount = 2;
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel4.Size = new System.Drawing.Size(1116, 658);
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(1227, 658);
             this.tableLayoutPanel4.TabIndex = 561;
             // 
             // GridViewListaClienteOrcPedFat
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1116, 611);
+            this.ClientSize = new System.Drawing.Size(1227, 619);
             this.Controls.Add(this.tableLayoutPanel4);
             this.Name = "GridViewListaClienteOrcPedFat";
             this.Text = "GridViewListaClienteOrcPedFat";

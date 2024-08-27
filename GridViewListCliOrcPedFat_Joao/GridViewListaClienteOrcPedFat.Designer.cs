@@ -46,8 +46,14 @@
             this.btnDetalhes = new System.Windows.Forms.Button();
             this.btnFiltrar = new System.Windows.Forms.Button();
             this.btnLimpar = new System.Windows.Forms.Button();
-            this.btnCarregar = new System.Windows.Forms.Button();
             this.dataGridViewCliente = new System.Windows.Forms.DataGridView();
+            this.chkCliente = new System.Windows.Forms.CheckBox();
+            this.chkData = new System.Windows.Forms.CheckBox();
+            this.chkSts = new System.Windows.Forms.CheckBox();
+            this.chkEnc = new System.Windows.Forms.CheckBox();
+            this.chkAbt = new System.Windows.Forms.CheckBox();
+            this.dtTimeIni = new System.Windows.Forms.DateTimePicker();
+            this.dtTimeFim = new System.Windows.Forms.DateTimePicker();
             this.groupBox1.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewFinan)).BeginInit();
@@ -63,7 +69,7 @@
             this.groupBox1.Controls.Add(this.chkPed);
             this.groupBox1.Controls.Add(this.chkOrc);
             this.groupBox1.Controls.Add(this.chkFat);
-            this.groupBox1.Location = new System.Drawing.Point(392, 40);
+            this.groupBox1.Location = new System.Drawing.Point(910, 49);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(200, 100);
             this.groupBox1.TabIndex = 548;
@@ -73,7 +79,6 @@
             // chkPed
             // 
             this.chkPed.AutoSize = true;
-            this.chkPed.Enabled = false;
             this.chkPed.Location = new System.Drawing.Point(0, 43);
             this.chkPed.Name = "chkPed";
             this.chkPed.Size = new System.Drawing.Size(64, 17);
@@ -84,7 +89,6 @@
             // chkOrc
             // 
             this.chkOrc.AutoSize = true;
-            this.chkOrc.Enabled = false;
             this.chkOrc.Location = new System.Drawing.Point(0, 20);
             this.chkOrc.Name = "chkOrc";
             this.chkOrc.Size = new System.Drawing.Size(83, 17);
@@ -95,7 +99,6 @@
             // chkFat
             // 
             this.chkFat.AutoSize = true;
-            this.chkFat.Enabled = false;
             this.chkFat.Location = new System.Drawing.Point(0, 66);
             this.chkFat.Name = "chkFat";
             this.chkFat.Size = new System.Drawing.Size(90, 17);
@@ -113,7 +116,7 @@
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 1;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 207F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 213F));
             this.tableLayoutPanel3.Size = new System.Drawing.Size(356, 213);
             this.tableLayoutPanel3.TabIndex = 547;
             // 
@@ -235,7 +238,7 @@
             // 
             // btnFiltrar
             // 
-            this.btnFiltrar.Location = new System.Drawing.Point(392, 146);
+            this.btnFiltrar.Location = new System.Drawing.Point(910, 155);
             this.btnFiltrar.Name = "btnFiltrar";
             this.btnFiltrar.Size = new System.Drawing.Size(128, 29);
             this.btnFiltrar.TabIndex = 538;
@@ -253,15 +256,6 @@
             this.btnLimpar.UseVisualStyleBackColor = true;
             this.btnLimpar.Visible = false;
             // 
-            // btnCarregar
-            // 
-            this.btnCarregar.Location = new System.Drawing.Point(19, 18);
-            this.btnCarregar.Name = "btnCarregar";
-            this.btnCarregar.Size = new System.Drawing.Size(95, 21);
-            this.btnCarregar.TabIndex = 536;
-            this.btnCarregar.Text = "Exibir Clientes";
-            this.btnCarregar.UseVisualStyleBackColor = true;
-            // 
             // dataGridViewCliente
             // 
             this.dataGridViewCliente.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -269,12 +263,90 @@
             this.dataGridViewCliente.Name = "dataGridViewCliente";
             this.dataGridViewCliente.Size = new System.Drawing.Size(365, 213);
             this.dataGridViewCliente.TabIndex = 535;
+            this.dataGridViewCliente.Visible = false;
+            // 
+            // chkCliente
+            // 
+            this.chkCliente.AutoSize = true;
+            this.chkCliente.Location = new System.Drawing.Point(19, 17);
+            this.chkCliente.Name = "chkCliente";
+            this.chkCliente.Size = new System.Drawing.Size(58, 17);
+            this.chkCliente.TabIndex = 549;
+            this.chkCliente.Text = "Cliente";
+            this.chkCliente.UseVisualStyleBackColor = true;
+            // 
+            // chkData
+            // 
+            this.chkData.AutoSize = true;
+            this.chkData.Location = new System.Drawing.Point(657, 26);
+            this.chkData.Name = "chkData";
+            this.chkData.Size = new System.Drawing.Size(49, 17);
+            this.chkData.TabIndex = 550;
+            this.chkData.Text = "Data";
+            this.chkData.UseVisualStyleBackColor = true;
+            // 
+            // chkSts
+            // 
+            this.chkSts.AutoSize = true;
+            this.chkSts.Location = new System.Drawing.Point(407, 26);
+            this.chkSts.Name = "chkSts";
+            this.chkSts.Size = new System.Drawing.Size(56, 17);
+            this.chkSts.TabIndex = 551;
+            this.chkSts.Text = "Status";
+            this.chkSts.UseVisualStyleBackColor = true;
+            // 
+            // chkEnc
+            // 
+            this.chkEnc.AutoSize = true;
+            this.chkEnc.Location = new System.Drawing.Point(392, 49);
+            this.chkEnc.Name = "chkEnc";
+            this.chkEnc.Size = new System.Drawing.Size(80, 17);
+            this.chkEnc.TabIndex = 552;
+            this.chkEnc.Text = "Encerrados";
+            this.chkEnc.UseVisualStyleBackColor = true;
+            this.chkEnc.Visible = false;
+            // 
+            // chkAbt
+            // 
+            this.chkAbt.AutoSize = true;
+            this.chkAbt.Location = new System.Drawing.Point(392, 72);
+            this.chkAbt.Name = "chkAbt";
+            this.chkAbt.Size = new System.Drawing.Size(62, 17);
+            this.chkAbt.TabIndex = 553;
+            this.chkAbt.Text = "Abertos";
+            this.chkAbt.UseVisualStyleBackColor = true;
+            this.chkAbt.Visible = false;
+            // 
+            // dtTimeIni
+            // 
+            this.dtTimeIni.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtTimeIni.Location = new System.Drawing.Point(583, 49);
+            this.dtTimeIni.Name = "dtTimeIni";
+            this.dtTimeIni.Size = new System.Drawing.Size(200, 20);
+            this.dtTimeIni.TabIndex = 554;
+            this.dtTimeIni.Visible = false;
+            // 
+            // dtTimeFim
+            // 
+            this.dtTimeFim.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtTimeFim.Location = new System.Drawing.Point(583, 69);
+            this.dtTimeFim.Name = "dtTimeFim";
+            this.dtTimeFim.Size = new System.Drawing.Size(200, 20);
+            this.dtTimeFim.TabIndex = 555;
+            this.dtTimeFim.Visible = false;
             // 
             // GridViewListaClienteOrcPedFat
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1135, 568);
+            this.Controls.Add(this.dtTimeFim);
+            this.Controls.Add(this.dtTimeIni);
+            this.Controls.Add(this.chkAbt);
+            this.Controls.Add(this.chkEnc);
+            this.Controls.Add(this.chkSts);
+            this.Controls.Add(this.chkData);
+            this.Controls.Add(this.chkCliente);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.tableLayoutPanel3);
             this.Controls.Add(this.tableLayoutPanel2);
@@ -287,7 +359,6 @@
             this.Controls.Add(this.btnDetalhes);
             this.Controls.Add(this.btnFiltrar);
             this.Controls.Add(this.btnLimpar);
-            this.Controls.Add(this.btnCarregar);
             this.Controls.Add(this.dataGridViewCliente);
             this.Name = "GridViewListaClienteOrcPedFat";
             this.Text = "GridViewListaClienteOrcPedFat";
@@ -325,8 +396,14 @@
         private System.Windows.Forms.Button btnDetalhes;
         private System.Windows.Forms.Button btnFiltrar;
         private System.Windows.Forms.Button btnLimpar;
-        private System.Windows.Forms.Button btnCarregar;
         private System.Windows.Forms.DataGridView dataGridViewCliente;
+        private System.Windows.Forms.CheckBox chkCliente;
+        private System.Windows.Forms.CheckBox chkData;
+        private System.Windows.Forms.CheckBox chkSts;
+        private System.Windows.Forms.CheckBox chkEnc;
+        private System.Windows.Forms.CheckBox chkAbt;
+        private System.Windows.Forms.DateTimePicker dtTimeIni;
+        private System.Windows.Forms.DateTimePicker dtTimeFim;
     }
 }
 

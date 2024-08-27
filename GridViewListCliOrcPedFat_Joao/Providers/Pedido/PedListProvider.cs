@@ -7,7 +7,7 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao.Providers.Pedido
 {
     public class PedListProvider
     {
-        public List<OrcamentoPedidoFaturamento> ListPedidos(SqlConnection connection, List<string> clienteIds)
+        public List<OrcamentoPedidoFaturamento> ListPedidos(SqlConnection connection, List<string> clienteIds, List<string> status)
         {
             List<OrcamentoPedidoFaturamento> pedidos = new List<OrcamentoPedidoFaturamento>();
 

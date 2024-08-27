@@ -7,7 +7,7 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao.Providers.Faturamen
 {
     public class FatListProvider
     {
-        public List<OrcamentoPedidoFaturamento> ListFaturamentos(SqlConnection connection, List<string> clienteIds)
+        public List<OrcamentoPedidoFaturamento> ListFaturamentos(SqlConnection connection, List<string> clienteIds, List<string> status)
         {
             List<OrcamentoPedidoFaturamento> faturamentos = new List<OrcamentoPedidoFaturamento>();
 

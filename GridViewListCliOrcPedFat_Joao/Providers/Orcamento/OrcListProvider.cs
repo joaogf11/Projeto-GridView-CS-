@@ -7,7 +7,7 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao.Providers.Orcamento
 {
     public class OrcListProvider
     {
-        public List<OrcamentoPedidoFaturamento> ListOrc(SqlConnection connection,List<string> clienteIds)
+        public List<OrcamentoPedidoFaturamento> ListOrc(SqlConnection connection,List<string> clienteIds, List<string> status)
         {
             
             List<OrcamentoPedidoFaturamento> orcamentos = new List<OrcamentoPedidoFaturamento>();

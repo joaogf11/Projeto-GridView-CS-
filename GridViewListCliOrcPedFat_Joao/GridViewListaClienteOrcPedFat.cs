@@ -54,9 +54,42 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao
                 btnFiltrar.Visible = true;
                 if (!chkFat.Checked) { btnFiltrar.Visible = false; }
             };
+            chkCliente.CheckedChanged += (object sender, System.EventArgs e) =>
+            {
+                dataGridViewCliente.Visible = true;
+                LoadClients();
+                if (!chkCliente.Checked)
+                {
+                    dataGridViewCliente.Visible = false;
+                    dataGridViewCliente.DataSource = null;
+                    dataGridViewCliente.Rows.Clear();
+                }
+            };
+            chkSts.CheckedChanged += (object sender, System.EventArgs e) =>
+            {
+                chkEnc.Visible = true;
+                chkAbt.Visible = true;
+                if (!chkSts.Checked)
+                {
+                    chkEnc.Visible = false;
+                    chkAbt.Visible = false;
+                    chkEnc.Checked = false;
+                    chkAbt.Checked = false;
+                }
+            };
+            chkData.CheckedChanged += (object sender, System.EventArgs e) =>
+            {
+                dtTimeIni.Visible = true;
+                dtTimeFim.Visible = true;
+                if (!chkData.Checked)
+                {
+                    dtTimeFim.Visible = false;
+                    dtTimeFim.Value = DateTime.Today;
+                    dtTimeIni.Visible = false;
+                    dtTimeIni.Value = DateTime.Today;
 
-            btnCarregar.Click += (object sender, System.EventArgs e) => { LoadClients(); };
-
+                }
+            };
             btnFiltrar.Click += (object sender, System.EventArgs e) => { SetParams(); };
 
             btnDetalhes.Click += async (object sender, System.EventArgs e) => { SetDetails(); };
@@ -73,9 +106,6 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao
                 btnDetalhes.Visible = false;
                 btnLimpar.Visible = false;
                 btnFiltrar.Visible = false;
-
-                MessageBox.Show("Listas limpas com sucesso!");
-                
             };
         }
         private void LoadClients()
@@ -86,43 +116,52 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao
                 _clientes = _clienteProvider.ListCliente(connection);
                 dataGridViewCliente.DataSource = _clientes;
                 InitializeDataGridViewCliente();
-                chkOrc.Enabled = true;
-                chkPed.Enabled = true;
-                chkFat.Enabled = true;
             }
         }
 
         private void SetParams()
         {
-            if (_clientes == null || !_clientes.Any()) { return; }
-
-            List<string> selectedClientIds = _clientes.Where(cliente => cliente.IsSelected)
-                .Select(cliente => cliente.CdCliente).ToList();
-
-
-            if (!selectedClientIds.Any()) { return; }
-
             using (var connectionManager = new SqlConnManager())
             using (SqlConnection connection = connectionManager.GetConnection())
             {
+                List<string> selectedClientIds = new List<string>();
+                List<string> selectedStatus = new List<string>();
+
+                if (chkCliente.Checked && _clientes != null)
+                {
+                    selectedClientIds = _clientes.Where(cliente => cliente.IsSelected)
+                        .Select(cliente => cliente.CdCliente).ToList();
+                }
+
+                if (chkSts.Checked)
+                {
+                    if (chkEnc.Checked)
+                    {
+                        selectedStatus.Add("Encerrado");
+                    }
+                    if (chkAbt.Checked)
+                    {
+                        selectedStatus.Add("Aberto");
+                    }
+                }
+
                 if (chkOrc.Checked)
                 {
-                    _orcpedfat = _orcListProvider.ListOrc(connection, selectedClientIds);
+                    _orcpedfat = _orcListProvider.ListOrc(connection, selectedClientIds, selectedStatus);
                     dataGridViewFiltros.DataSource = _orcpedfat;
                 }
 
                 if (chkPed.Checked)
                 {
-                    _orcpedfat = _pedidosProvider.ListPedidos(connection, selectedClientIds);
+                    _orcpedfat = _pedidosProvider.ListPedidos(connection, selectedClientIds, selectedStatus);
                     dataGridViewFiltros.DataSource = _orcpedfat;
                 }
 
                 if (chkFat.Checked)
                 {
-                    _orcpedfat = _faturamentosProvider.ListFaturamentos(connection, selectedClientIds);
+                    _orcpedfat = _faturamentosProvider.ListFaturamentos(connection, selectedClientIds, selectedStatus);
                     dataGridViewFiltros.DataSource = _orcpedfat;
                 }
-
                 btnDetalhes.Visible = true;
                 InitializeDataGridViewFiltros();
             }

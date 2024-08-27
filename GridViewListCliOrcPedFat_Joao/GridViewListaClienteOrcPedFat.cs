@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
 using System.Linq;
 using System.Windows.Forms;
 using WindowsFormsGridView.GridViewListCliOrcPedFat_Joao.Providers;
@@ -17,16 +16,16 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao
         private List<OrcPedFat> _orcpedfat = new List<OrcPedFat>();
         private List<Itens> _itens = new List<Itens>();
         private List<Finan> _fin = new List<Finan>();
-        private CliListProvider _clienteProvider = new CliListProvider();
-        private OrcItensProvider _orcItensProvider = new OrcItensProvider();
-        private OrcListProvider _orcListProvider = new OrcListProvider();
-        private OrcFinProvider _orcFinProvider = new OrcFinProvider();
-        private PedListProvider _pedidosProvider = new PedListProvider();
-        private PedItensProvider _pedItensProvider = new PedItensProvider();
-        private PedFinProvider _pedFinProvider = new PedFinProvider();
-        private FatListProvider _faturamentosProvider = new FatListProvider();
-        private FatItensProvider _fatItensProvider = new FatItensProvider();
-        private FatFinProvider _fatFinProvider = new FatFinProvider();
+        private readonly CliListProvider _clienteProvider = new CliListProvider();
+        private readonly OrcItensProvider _orcItensProvider = new OrcItensProvider();
+        private readonly OrcListProvider _orcListProvider = new OrcListProvider();
+        private readonly OrcFinProvider _orcFinProvider = new OrcFinProvider();
+        private readonly PedListProvider _pedidosProvider = new PedListProvider();
+        private readonly PedItensProvider _pedItensProvider = new PedItensProvider();
+        private readonly PedFinProvider _pedFinProvider = new PedFinProvider();
+        private readonly FatListProvider _faturamentosProvider = new FatListProvider();
+        private readonly FatItensProvider _fatItensProvider = new FatItensProvider();
+        private readonly FatFinProvider _fatFinProvider = new FatFinProvider();
 
         public GridViewListaClienteOrcPedFat()
         {
@@ -304,6 +303,14 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao
                 DisplayIndex = 2
             };
             dataGridViewFiltros.Columns.Add(clienteColumn);
+            var statusColumn = new DataGridViewTextBoxColumn
+            {
+                Name = "Status",
+                HeaderText = "Status",
+                DataPropertyName = "Status",
+                DisplayIndex = 3
+            };
+            dataGridViewFiltros.Columns.Add(statusColumn);
             if (chkOrc.Checked)
                 label1.Visible = true;
             else if (chkPed.Checked)

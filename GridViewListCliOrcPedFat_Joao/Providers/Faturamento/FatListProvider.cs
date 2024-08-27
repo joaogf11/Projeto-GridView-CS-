@@ -11,22 +11,22 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao.Providers.Faturamen
         public List<OrcPedFat> ListFaturamentos(SqlConnection connection, List<string> clienteIds,
             List<string> status, DateTime? dataInicio, DateTime? dataFim)
         {
-            List<OrcPedFat> faturamentos = new List<OrcPedFat>();
+            var faturamentos = new List<OrcPedFat>();
 
-            using (SqlCommand commands = new SqlCommand())
+            using (var commands = new SqlCommand())
             {
                 commands.Connection = connection;
                 var query =
-                    "SELECT NumPedido, DtPedido,cdcliente, DtFaturamento FROM Pedido WHERE";
+                    "SELECT NumPedido, DtPedido,cdcliente, DtFaturamento,StPedido FROM Pedido WHERE";
                 if (clienteIds != null && clienteIds.Count > 0)
                 {
-                    string clientesFilter = string.Join(",", clienteIds.Select(cdcliente => $"'{cdcliente}'"));
+                    var clientesFilter = string.Join(",", clienteIds.Select(cdcliente => $"'{cdcliente}'"));
                     query += $" CdCliente IN ({clientesFilter})";
                 }
 
                 if (status != null && status.Count > 0)
                 {
-                    string statusFilter = string.Join(",", status.Select(s => $"'{s}'"));
+                    var statusFilter = string.Join(",", status.Select(s => $"'{s}'"));
                     query += $" StPedido IN ({statusFilter})";
                 }
 
@@ -38,13 +38,14 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao.Providers.Faturamen
                 }
 
                 commands.CommandText = query;
-                SqlDataReader leitor = commands.ExecuteReader();
+                var leitor = commands.ExecuteReader();
 
                 while (leitor.Read())
                 {
                     var faturamento = new OrcPedFat();
                     faturamento.NumPedido = leitor["NumPedido"].ToString();
                     faturamento.Cliente = leitor["cdcliente"].ToString();
+                    faturamento.Status = leitor["StPedido"].ToString();
                     faturamentos.Add(faturamento);
                 }
 

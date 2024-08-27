@@ -1,14 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace WindowsFormsGridView.ViewModels
 {
     public class Cliente : IEquatable<Cliente>
-    { 
+    {
         public string CdCliente { get; set; }
         public string Razao { get; set; }
 
@@ -18,7 +13,5 @@ namespace WindowsFormsGridView.ViewModels
         {
             return CdCliente == other.CdCliente;
         }
-
-        
     }
 }

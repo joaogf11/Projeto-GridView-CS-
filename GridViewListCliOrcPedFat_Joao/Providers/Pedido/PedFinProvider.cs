@@ -9,16 +9,17 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao.Providers.Pedido
     {
         public List<Finan> ListPedFin(SqlConnection connection, List<string> pedidosIds)
         {
-            List<Finan> finanPedido = new List<Finan>();
+            var finanPedido = new List<Finan>();
 
-            using (SqlCommand commands = new SqlCommand())
+            using (var commands = new SqlCommand())
             {
                 commands.Connection = connection;
-                string pedidosFilter = string.Join(",", pedidosIds.Select(NumPedido => $"'{NumPedido}'"));
-                commands.CommandText = $"SELECT valorr, dtemissao, dsdocquit,SUBSTRING(numlancto, 3, 2) AS 'num' FROM PagarReceber " +
-                                       $"INNER JOIN DocQuitacao ON DocQuitacao.tpdocquit = PagarReceber.tpdocquit " +
-                                       $"WHERE SUBSTRING(numlancto, 3, 2) IN ({pedidosFilter})";
-                SqlDataReader leitor = commands.ExecuteReader();
+                var pedidosFilter = string.Join(",", pedidosIds.Select(NumPedido => $"'{NumPedido}'"));
+                commands.CommandText =
+                    "SELECT valorr, dtemissao, dsdocquit,SUBSTRING(numlancto, 3, 2) AS 'num' FROM PagarReceber " +
+                    "INNER JOIN DocQuitacao ON DocQuitacao.tpdocquit = PagarReceber.tpdocquit " +
+                    $"WHERE SUBSTRING(numlancto, 3, 2) IN ({pedidosFilter})";
+                var leitor = commands.ExecuteReader();
 
                 while (leitor.Read())
                 {
@@ -29,8 +30,8 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao.Providers.Pedido
                     financeiro.NumPed = leitor["num"].ToString();
                     finanPedido.Add(financeiro);
                 }
-                leitor.Close();
 
+                leitor.Close();
             }
 
             return finanPedido;

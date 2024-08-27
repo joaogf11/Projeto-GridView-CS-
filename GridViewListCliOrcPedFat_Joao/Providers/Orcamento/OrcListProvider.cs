@@ -11,15 +11,15 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao.Providers.Orcamento
         public List<OrcPedFat> ListOrc(SqlConnection connection, List<string> clienteIds,
             List<string> status, DateTime? dataInicio, DateTime? dataFim)
         {
-            List<OrcPedFat> orcamentos = new List<OrcPedFat>();
+            var orcamentos = new List<OrcPedFat>();
 
-            using (SqlCommand commands = new SqlCommand())
+            using (var commands = new SqlCommand())
             {
-                var query = "SELECT numorcamento,cdcliente FROM orcamento WHERE";
+                var query = "SELECT numorcamento,cdcliente, storcamento FROM orcamento WHERE";
                 commands.Connection = connection;
                 if (clienteIds != null && clienteIds.Count > 0)
                 {
-                    string clientesFilter = string.Join(",", clienteIds.Select(cdcliente => $"'{cdcliente}'"));
+                    var clientesFilter = string.Join(",", clienteIds.Select(cdcliente => $"'{cdcliente}'"));
                     query += $" cdcliente IN ({clientesFilter})";
                 }
 
@@ -34,7 +34,7 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao.Providers.Orcamento
 
                     if (mappedStatus.Count > 0)
                     {
-                        string statusFilter = string.Join(",", mappedStatus);
+                        var statusFilter = string.Join(",", mappedStatus);
                         query += $" storcamento IN ({statusFilter})";
                     }
                 }
@@ -47,7 +47,7 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao.Providers.Orcamento
                 }
 
                 commands.CommandText = query;
-                SqlDataReader leitor = commands.ExecuteReader();
+                var leitor = commands.ExecuteReader();
 
 
                 while (leitor.Read())
@@ -55,6 +55,7 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao.Providers.Orcamento
                     var orcamento = new OrcPedFat();
                     orcamento.NumPedido = leitor["numorcamento"].ToString();
                     orcamento.Cliente = leitor["cdcliente"].ToString();
+                    orcamento.Status = leitor["storcamento"].ToString();
                     orcamentos.Add(orcamento);
                 }
 

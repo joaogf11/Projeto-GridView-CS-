@@ -7,18 +7,19 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao.Providers.Orcamento
 {
     public class OrcFinProvider
     {
-        public List<Finan> ListOrcFin(SqlConnection connection,List<string> orcamentosIds)
+        public List<Finan> ListOrcFin(SqlConnection connection, List<string> orcamentosIds)
         {
-            List<Finan> finanOrcamento = new List<Finan>();
+            var finanOrcamento = new List<Finan>();
 
-            using (SqlCommand commands = new SqlCommand())
+            using (var commands = new SqlCommand())
             {
                 commands.Connection = connection;
-                string orcamentosFilter = string.Join(",", orcamentosIds.Select(numorcamento => $"'{numorcamento}'"));
-                commands.CommandText = $"SELECT valorr, dtemissao, dsdocquit, SUBSTRING(numlancto, 3, 2) AS 'num' FROM OrcPagarReceber " +
-                                       $"INNER JOIN DocQuitacao ON DocQuitacao.tpdocquit = OrcPagarReceber.tpdocquit " +
-                                       $"WHERE SUBSTRING(numlancto, 3, 2) IN ({orcamentosFilter})";
-                SqlDataReader leitor = commands.ExecuteReader();
+                var orcamentosFilter = string.Join(",", orcamentosIds.Select(numorcamento => $"'{numorcamento}'"));
+                commands.CommandText =
+                    "SELECT valorr, dtemissao, dsdocquit, SUBSTRING(numlancto, 3, 2) AS 'num' FROM OrcPagarReceber " +
+                    "INNER JOIN DocQuitacao ON DocQuitacao.tpdocquit = OrcPagarReceber.tpdocquit " +
+                    $"WHERE SUBSTRING(numlancto, 3, 2) IN ({orcamentosFilter})";
+                var leitor = commands.ExecuteReader();
 
                 while (leitor.Read())
                 {
@@ -29,8 +30,8 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao.Providers.Orcamento
                     financeiro.NumPed = leitor["num"].ToString();
                     finanOrcamento.Add(financeiro);
                 }
-                leitor.Close();
 
+                leitor.Close();
             }
 
             return finanOrcamento;

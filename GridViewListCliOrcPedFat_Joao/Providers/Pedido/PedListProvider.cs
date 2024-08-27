@@ -8,23 +8,24 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao.Providers.Pedido
 {
     public class PedListProvider
     {
-        public List<OrcPedFat> ListPedidos(SqlConnection connection, List<string> clienteIds, List<string> status, DateTime? dataInicio, DateTime? dataFim)
+        public List<OrcPedFat> ListPedidos(SqlConnection connection, List<string> clienteIds, List<string> status,
+            DateTime? dataInicio, DateTime? dataFim)
         {
-            List<OrcPedFat> pedidos = new List<OrcPedFat>();
+            var pedidos = new List<OrcPedFat>();
 
-            using (SqlCommand commands = new SqlCommand())
+            using (var commands = new SqlCommand())
             {
                 commands.Connection = connection;
-                var query = "SELECT nummovimento, cdcliente FROM pendenciavenda1 WHERE";
+                var query = "SELECT nummovimento, cdcliente, stpendencia FROM pendenciavenda1 WHERE";
                 if (clienteIds != null && clienteIds.Count > 0)
                 {
-                    string clientesFilter = string.Join(",", clienteIds.Select(cdcliente => $"'{cdcliente}'"));
+                    var clientesFilter = string.Join(",", clienteIds.Select(cdcliente => $"'{cdcliente}'"));
                     query += $" CdCliente IN ({clientesFilter})";
                 }
 
                 if (status != null && status.Count > 0)
                 {
-                    string statusFilter = string.Join(",", status.Select(s => $"'{s}'"));
+                    var statusFilter = string.Join(",", status.Select(s => $"'{s}'"));
                     query += $" stpendencia IN ({statusFilter})";
                 }
 
@@ -36,17 +37,18 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao.Providers.Pedido
                 }
 
                 commands.CommandText = query;
-                SqlDataReader leitor = commands.ExecuteReader();
+                var leitor = commands.ExecuteReader();
 
                 while (leitor.Read())
                 {
                     var pedido = new OrcPedFat();
                     pedido.NumPedido = leitor["nummovimento"].ToString();
                     pedido.Cliente = leitor["cdcliente"].ToString();
+                    pedido.Status = leitor["stpendencia"].ToString();
                     pedidos.Add(pedido);
                 }
-                leitor.Close();
 
+                leitor.Close();
             }
 
             return pedidos;

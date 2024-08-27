@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WindowsFormsGridView.ViewModels;
 
 namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao.Providers.Faturamento
@@ -12,16 +9,17 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao.Providers.Faturamen
     {
         public List<Finan> ListFatFin(SqlConnection connection, List<string> faturamentosIds)
         {
-            List<Finan> finanFaturamento = new List<Finan>();
+            var finanFaturamento = new List<Finan>();
 
-            using (SqlCommand commands = new SqlCommand())
+            using (var commands = new SqlCommand())
             {
                 commands.Connection = connection;
-                string faturamentosFilter = string.Join(",", faturamentosIds.Select(NumPedidoo => $"'{NumPedidoo}'"));
-                commands.CommandText = $"SELECT valorr, dtemissao, dsdocquit,SUBSTRING(numlancto, 3, 2) AS 'num' FROM PagarReceber " +
-                                       $"INNER JOIN DocQuitacao ON DocQuitacao.tpdocquit = PagarReceber.tpdocquit " +
-                                       $"WHERE SUBSTRING(numlancto, 3, 2) IN ({faturamentosFilter})";
-                SqlDataReader leitor = commands.ExecuteReader();
+                var faturamentosFilter = string.Join(",", faturamentosIds.Select(NumPedidoo => $"'{NumPedidoo}'"));
+                commands.CommandText =
+                    "SELECT valorr, dtemissao, dsdocquit,SUBSTRING(numlancto, 3, 2) AS 'num' FROM PagarReceber " +
+                    "INNER JOIN DocQuitacao ON DocQuitacao.tpdocquit = PagarReceber.tpdocquit " +
+                    $"WHERE SUBSTRING(numlancto, 3, 2) IN ({faturamentosFilter})";
+                var leitor = commands.ExecuteReader();
 
                 while (leitor.Read())
                 {
@@ -32,8 +30,8 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao.Providers.Faturamen
                     financeiro.NumPed = leitor["num"].ToString();
                     finanFaturamento.Add(financeiro);
                 }
-                leitor.Close();
 
+                leitor.Close();
             }
 
             return finanFaturamento;

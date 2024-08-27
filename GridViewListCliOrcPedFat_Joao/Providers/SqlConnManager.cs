@@ -1,16 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao.Providers
 {
     public class SqlConnManager : IDisposable
     {
-        private readonly string _connectionString = "Server=NBJOAO;Database=DBDEV;User ID=sa;Password=dp;MultipleActiveResultSets=True;";
+        private readonly string _connectionString =
+            "Server=NBJOAO;Database=DBDEV;User ID=sa;Password=dp;MultipleActiveResultSets=True;";
+
         private SqlConnection _connection;
+
         public SqlConnection GetConnection()
         {
             if (_connection == null)
@@ -21,6 +20,7 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao.Providers
 
             return _connection;
         }
+
         public void Dispose()
         {
             if (_connection != null)

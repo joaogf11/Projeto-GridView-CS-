@@ -9,15 +9,16 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao.Providers.Pedido
     {
         public List<Itens> ListPedItens(SqlConnection connection, List<string> pedidosIds)
         {
-            List<Itens> itensPedido = new List<Itens>();
-            using (SqlCommand commands = new SqlCommand())
+            var itensPedido = new List<Itens>();
+            using (var commands = new SqlCommand())
             {
                 commands.Connection = connection;
-                string pedidosFilter = string.Join(",", pedidosIds.Select(nummovimento => $"'{nummovimento}'"));
-                commands.CommandText = $"SELECT pendenciavendaitem.cdproduto,qtdsolicitada, Produto.DsVenda, nummovimento FROM pendenciavendaitem " +
-                                       $"INNER JOIN Produto ON Produto.CdProduto = pendenciavendaitem.cdproduto " +
-                                       $"WHERE nummovimento IN ({pedidosFilter})";
-                SqlDataReader leitor = commands.ExecuteReader();
+                var pedidosFilter = string.Join(",", pedidosIds.Select(nummovimento => $"'{nummovimento}'"));
+                commands.CommandText =
+                    "SELECT pendenciavendaitem.cdproduto,qtdsolicitada, Produto.DsVenda, nummovimento FROM pendenciavendaitem " +
+                    "INNER JOIN Produto ON Produto.CdProduto = pendenciavendaitem.cdproduto " +
+                    $"WHERE nummovimento IN ({pedidosFilter})";
+                var leitor = commands.ExecuteReader();
 
                 while (leitor.Read())
                 {
@@ -28,8 +29,8 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao.Providers.Pedido
                     item.Descricao = leitor["DsVenda"].ToString();
                     itensPedido.Add(item);
                 }
+
                 leitor.Close();
-                
             }
 
             return itensPedido;

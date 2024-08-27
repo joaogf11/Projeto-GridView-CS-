@@ -238,33 +238,33 @@
             // 
             // btnDetalhes
             // 
+            this.btnDetalhes.Enabled = false;
             this.btnDetalhes.Location = new System.Drawing.Point(4, 246);
             this.btnDetalhes.Name = "btnDetalhes";
             this.btnDetalhes.Size = new System.Drawing.Size(128, 29);
             this.btnDetalhes.TabIndex = 539;
             this.btnDetalhes.Text = "Exibir Detalhes";
             this.btnDetalhes.UseVisualStyleBackColor = true;
-            this.btnDetalhes.Visible = false;
             // 
             // btnFiltrar
             // 
+            this.btnFiltrar.Enabled = false;
             this.btnFiltrar.Location = new System.Drawing.Point(15, 293);
             this.btnFiltrar.Name = "btnFiltrar";
             this.btnFiltrar.Size = new System.Drawing.Size(128, 28);
             this.btnFiltrar.TabIndex = 538;
             this.btnFiltrar.Text = "Carregar";
             this.btnFiltrar.UseVisualStyleBackColor = true;
-            this.btnFiltrar.Visible = false;
             // 
             // btnLimpar
             // 
+            this.btnLimpar.Enabled = false;
             this.btnLimpar.Location = new System.Drawing.Point(965, 246);
             this.btnLimpar.Name = "btnLimpar";
             this.btnLimpar.Size = new System.Drawing.Size(128, 29);
             this.btnLimpar.TabIndex = 537;
             this.btnLimpar.Text = "Limpar Grid";
             this.btnLimpar.UseVisualStyleBackColor = true;
-            this.btnLimpar.Visible = false;
             // 
             // dataGridViewCliente
             // 
@@ -421,7 +421,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1116, 654);
+            this.ClientSize = new System.Drawing.Size(1116, 611);
             this.Controls.Add(this.tableLayoutPanel4);
             this.Name = "GridViewListaClienteOrcPedFat";
             this.Text = "GridViewListaClienteOrcPedFat";

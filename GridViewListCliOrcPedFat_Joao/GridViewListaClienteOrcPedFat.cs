@@ -338,6 +338,14 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao
                 DisplayIndex = 2
             };
             dataGridViewItens.Columns.Add(clienteColumn);
+            DataGridViewTextBoxColumn qtdColumn = new DataGridViewTextBoxColumn
+            {
+                Name = "QtdProduto",
+                HeaderText = "Quantidade",
+                DataPropertyName = "QtdProduto",
+                DisplayIndex = 3
+            };
+            dataGridViewItens.Columns.Add(qtdColumn);
         }
 
         private void InitializeDataGridViewFinan()

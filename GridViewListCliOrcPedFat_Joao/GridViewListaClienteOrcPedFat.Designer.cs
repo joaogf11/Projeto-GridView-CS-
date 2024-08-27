@@ -259,11 +259,11 @@
             // dataGridViewCliente
             // 
             this.dataGridViewCliente.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewCliente.Enabled = false;
             this.dataGridViewCliente.Location = new System.Drawing.Point(21, 40);
             this.dataGridViewCliente.Name = "dataGridViewCliente";
             this.dataGridViewCliente.Size = new System.Drawing.Size(365, 213);
             this.dataGridViewCliente.TabIndex = 535;
-            this.dataGridViewCliente.Visible = false;
             // 
             // chkCliente
             // 
@@ -298,42 +298,42 @@
             // chkEnc
             // 
             this.chkEnc.AutoSize = true;
+            this.chkEnc.Enabled = false;
             this.chkEnc.Location = new System.Drawing.Point(392, 49);
             this.chkEnc.Name = "chkEnc";
             this.chkEnc.Size = new System.Drawing.Size(80, 17);
             this.chkEnc.TabIndex = 552;
             this.chkEnc.Text = "Encerrados";
             this.chkEnc.UseVisualStyleBackColor = true;
-            this.chkEnc.Visible = false;
             // 
             // chkAbt
             // 
             this.chkAbt.AutoSize = true;
+            this.chkAbt.Enabled = false;
             this.chkAbt.Location = new System.Drawing.Point(392, 72);
             this.chkAbt.Name = "chkAbt";
             this.chkAbt.Size = new System.Drawing.Size(62, 17);
             this.chkAbt.TabIndex = 553;
             this.chkAbt.Text = "Abertos";
             this.chkAbt.UseVisualStyleBackColor = true;
-            this.chkAbt.Visible = false;
             // 
             // dtTimeIni
             // 
+            this.dtTimeIni.Enabled = false;
             this.dtTimeIni.Format = System.Windows.Forms.DateTimePickerFormat.Short;
             this.dtTimeIni.Location = new System.Drawing.Point(583, 49);
             this.dtTimeIni.Name = "dtTimeIni";
             this.dtTimeIni.Size = new System.Drawing.Size(200, 20);
             this.dtTimeIni.TabIndex = 554;
-            this.dtTimeIni.Visible = false;
             // 
             // dtTimeFim
             // 
+            this.dtTimeFim.Enabled = false;
             this.dtTimeFim.Format = System.Windows.Forms.DateTimePickerFormat.Short;
             this.dtTimeFim.Location = new System.Drawing.Point(583, 69);
             this.dtTimeFim.Name = "dtTimeFim";
             this.dtTimeFim.Size = new System.Drawing.Size(200, 20);
             this.dtTimeFim.TabIndex = 555;
-            this.dtTimeFim.Visible = false;
             // 
             // GridViewListaClienteOrcPedFat
             // 

@@ -56,36 +56,36 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao
             };
             chkCliente.CheckedChanged += (object sender, System.EventArgs e) =>
             {
-                dataGridViewCliente.Visible = true;
+                dataGridViewCliente.Enabled = true;
                 LoadClients();
                 if (!chkCliente.Checked)
                 {
-                    dataGridViewCliente.Visible = false;
+                    dataGridViewCliente.Enabled = false;
                     dataGridViewCliente.DataSource = null;
                     dataGridViewCliente.Rows.Clear();
                 }
             };
             chkSts.CheckedChanged += (object sender, System.EventArgs e) =>
             {
-                chkEnc.Visible = true;
-                chkAbt.Visible = true;
+                chkEnc.Enabled = true;
+                chkAbt.Enabled = true;
                 if (!chkSts.Checked)
                 {
-                    chkEnc.Visible = false;
-                    chkAbt.Visible = false;
+                    chkEnc.Enabled = false;
+                    chkAbt.Enabled = false;
                     chkEnc.Checked = false;
                     chkAbt.Checked = false;
                 }
             };
             chkData.CheckedChanged += (object sender, System.EventArgs e) =>
             {
-                dtTimeIni.Visible = true;
-                dtTimeFim.Visible = true;
+                dtTimeIni.Enabled = true;
+                dtTimeFim.Enabled = true;
                 if (!chkData.Checked)
                 {
-                    dtTimeFim.Visible = false;
+                    dtTimeFim.Enabled = false;
                     dtTimeFim.Value = DateTime.Today;
-                    dtTimeIni.Visible = false;
+                    dtTimeIni.Enabled = false;
                     dtTimeIni.Value = DateTime.Today;
 
                 }
@@ -126,6 +126,8 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao
             {
                 List<string> selectedClientIds = new List<string>();
                 List<string> selectedStatus = new List<string>();
+                DateTime? dataInicio = null;
+                DateTime? dataFim = null;
 
                 if (chkCliente.Checked && _clientes != null)
                 {
@@ -137,29 +139,34 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao
                 {
                     if (chkEnc.Checked)
                     {
-                        selectedStatus.Add("Encerrado");
+                        selectedStatus.Add("E");
                     }
                     if (chkAbt.Checked)
                     {
-                        selectedStatus.Add("Aberto");
+                        selectedStatus.Add("A");
                     }
+                }
+                if (chkData.Checked)
+                {
+                    dataInicio = dtTimeIni.Value.Date;
+                    dataFim = dtTimeFim.Value.Date.AddDays(1).AddTicks(-1);
                 }
 
                 if (chkOrc.Checked)
                 {
-                    _orcpedfat = _orcListProvider.ListOrc(connection, selectedClientIds, selectedStatus);
+                    _orcpedfat = _orcListProvider.ListOrc(connection, selectedClientIds, selectedStatus, dataInicio,dataFim);
                     dataGridViewFiltros.DataSource = _orcpedfat;
                 }
 
                 if (chkPed.Checked)
                 {
-                    _orcpedfat = _pedidosProvider.ListPedidos(connection, selectedClientIds, selectedStatus);
+                    _orcpedfat = _pedidosProvider.ListPedidos(connection, selectedClientIds, selectedStatus, dataInicio, dataFim);
                     dataGridViewFiltros.DataSource = _orcpedfat;
                 }
 
                 if (chkFat.Checked)
                 {
-                    _orcpedfat = _faturamentosProvider.ListFaturamentos(connection, selectedClientIds, selectedStatus);
+                    _orcpedfat = _faturamentosProvider.ListFaturamentos(connection, selectedClientIds, selectedStatus, dataInicio, dataFim);
                     dataGridViewFiltros.DataSource = _orcpedfat;
                 }
                 btnDetalhes.Visible = true;

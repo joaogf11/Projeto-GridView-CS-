@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WindowsFormsGridView.ViewModels
 {
-    public class Itens
+    public class Itens : IEquatable<Itens>
     {
         public string CdProduto { get; set; }
         public string QtdProduto { get; set; }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WindowsFormsGridView.ViewModels
 {
-    public class OrcamentoPedidoFaturamento
+    public class OrcamentoPedidoFaturamento : IEquatable<OrcamentoPedidoFaturamento>
     {
         public string NumPedido { get; set; }
         public string Cliente { get; set; }

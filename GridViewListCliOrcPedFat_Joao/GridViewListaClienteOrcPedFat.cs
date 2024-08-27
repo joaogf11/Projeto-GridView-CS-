@@ -38,21 +38,21 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao
             {
                 CheckboxStateUpdate(chkOrc);
                 btnFiltrar.Enabled = true;
-                if (!chkOrc.Checked) { btnFiltrar.Visible = false; }
+                if (!chkOrc.Checked) { btnFiltrar.Enabled = false; }
             };
 
             chkPed.CheckedChanged += (object sender, System.EventArgs e) =>
             {
                 CheckboxStateUpdate(chkPed);
-                btnFiltrar.Visible = true;
-                if (!chkPed.Checked) { btnFiltrar.Visible = false; }
+                btnFiltrar.Enabled = true;
+                if (!chkPed.Checked) { btnFiltrar.Enabled = false; }
             };
 
             chkFat.CheckedChanged += (object sender, System.EventArgs e) =>
             {
                 CheckboxStateUpdate(chkFat);
-                btnFiltrar.Visible = true;
-                if (!chkFat.Checked) { btnFiltrar.Visible = false; }
+                btnFiltrar.Enabled = true;
+                if (!chkFat.Checked) { btnFiltrar.Enabled = false; }
             };
             chkCliente.CheckedChanged += (object sender, System.EventArgs e) =>
             {
@@ -105,7 +105,7 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao
             };
             btnFiltrar.Click += (object sender, System.EventArgs e) => { SetParams(); };
 
-            btnDetalhes.Click += async (object sender, System.EventArgs e) => { SetDetails(); };
+            btnDetalhes.Click += (object sender, System.EventArgs e) => { SetDetails(); };
 
             btnLimpar.Click += (object sender, System.EventArgs e) =>
             {

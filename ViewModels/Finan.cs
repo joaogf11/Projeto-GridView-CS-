@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WindowsFormsGridView.ViewModels
 {
-    public class Finan
+    public class Finan : IEquatable<Finan>
     {
         public string Valor { get; set; }
         public string DataEmi { get; set; }

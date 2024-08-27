@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace WindowsFormsGridView.ViewModels
 {
-    public class Cliente 
+    public class Cliente : IEquatable<Cliente>
     { 
         public string CdCliente { get; set; }
         public string Razao { get; set; }

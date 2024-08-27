@@ -8,9 +8,9 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao.Providers.Pedido
 {
     public class PedListProvider
     {
-        public List<OrcamentoPedidoFaturamento> ListPedidos(SqlConnection connection, List<string> clienteIds, List<string> status, DateTime? dataInicio, DateTime? dataFim)
+        public List<OrcPedFat> ListPedidos(SqlConnection connection, List<string> clienteIds, List<string> status, DateTime? dataInicio, DateTime? dataFim)
         {
-            List<OrcamentoPedidoFaturamento> pedidos = new List<OrcamentoPedidoFaturamento>();
+            List<OrcPedFat> pedidos = new List<OrcPedFat>();
 
             using (SqlCommand commands = new SqlCommand())
             {
@@ -40,7 +40,7 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao.Providers.Pedido
 
                 while (leitor.Read())
                 {
-                    var pedido = new OrcamentoPedidoFaturamento();
+                    var pedido = new OrcPedFat();
                     pedido.NumPedido = leitor["nummovimento"].ToString();
                     pedido.Cliente = leitor["cdcliente"].ToString();
                     pedidos.Add(pedido);

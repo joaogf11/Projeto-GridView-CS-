@@ -8,10 +8,10 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao.Providers.Orcamento
 {
     public class OrcListProvider
     {
-        public List<OrcamentoPedidoFaturamento> ListOrc(SqlConnection connection, List<string> clienteIds,
+        public List<OrcPedFat> ListOrc(SqlConnection connection, List<string> clienteIds,
             List<string> status, DateTime? dataInicio, DateTime? dataFim)
         {
-            List<OrcamentoPedidoFaturamento> orcamentos = new List<OrcamentoPedidoFaturamento>();
+            List<OrcPedFat> orcamentos = new List<OrcPedFat>();
 
             using (SqlCommand commands = new SqlCommand())
             {
@@ -52,7 +52,7 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao.Providers.Orcamento
 
                 while (leitor.Read())
                 {
-                    var orcamento = new OrcamentoPedidoFaturamento();
+                    var orcamento = new OrcPedFat();
                     orcamento.NumPedido = leitor["numorcamento"].ToString();
                     orcamento.Cliente = leitor["cdcliente"].ToString();
                     orcamentos.Add(orcamento);

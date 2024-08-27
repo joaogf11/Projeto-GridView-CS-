@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Reflection;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using WindowsFormsGridView.GridViewListCliOrcPedFat_Joao.Providers;
 using WindowsFormsGridView.GridViewListCliOrcPedFat_Joao.Providers.Faturamento;
@@ -16,9 +14,9 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao
     public partial class GridViewListaClienteOrcPedFat : Form
     {
         private List<Cliente> _clientes = new List<Cliente>();
-        private List<OrcamentoPedidoFaturamento> _orcpedfat = new List<OrcamentoPedidoFaturamento>();
-        private List<Itens> _Itens = new List<Itens>();
-        private List<Finan> _Fin = new List<Finan>();
+        private List<OrcPedFat> _orcpedfat = new List<OrcPedFat>();
+        private List<Itens> _itens = new List<Itens>();
+        private List<Finan> _fin = new List<Finan>();
         private CliListProvider _clienteProvider = new CliListProvider();
         private OrcItensProvider _orcItensProvider = new OrcItensProvider();
         private OrcListProvider _orcListProvider = new OrcListProvider();
@@ -34,27 +32,27 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao
         {
             InitializeComponent();
 
-            chkOrc.CheckedChanged += (object sender, System.EventArgs e) =>
+            chkOrc.CheckedChanged += (sender, e) =>
             {
                 CheckboxStateUpdate(chkOrc);
                 btnFiltrar.Enabled = true;
                 if (!chkOrc.Checked) { btnFiltrar.Enabled = false; }
             };
 
-            chkPed.CheckedChanged += (object sender, System.EventArgs e) =>
+            chkPed.CheckedChanged += (sender, e) =>
             {
                 CheckboxStateUpdate(chkPed);
                 btnFiltrar.Enabled = true;
                 if (!chkPed.Checked) { btnFiltrar.Enabled = false; }
             };
 
-            chkFat.CheckedChanged += (object sender, System.EventArgs e) =>
+            chkFat.CheckedChanged += (sender, e) =>
             {
                 CheckboxStateUpdate(chkFat);
                 btnFiltrar.Enabled = true;
                 if (!chkFat.Checked) { btnFiltrar.Enabled = false; }
             };
-            chkCliente.CheckedChanged += (object sender, System.EventArgs e) =>
+            chkCliente.CheckedChanged += (sender, e) =>
             {
                 dataGridViewCliente.Enabled = true;
                 LoadClients();
@@ -71,7 +69,7 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao
                 }
                 
             };
-            chkSts.CheckedChanged += (object sender, System.EventArgs e) =>
+            chkSts.CheckedChanged += (sender, e) =>
             {
                 chkEnc.Enabled = true;
                 chkAbt.Enabled = true;
@@ -87,7 +85,7 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao
                     chkData.Enabled = true;
                 }
             };
-            chkData.CheckedChanged += (object sender, System.EventArgs e) =>
+            chkData.CheckedChanged += (sender, e) =>
             {
                 dtTimeIni.Enabled = true;
                 dtTimeFim.Enabled = true;
@@ -103,11 +101,11 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao
                     chkSts.Enabled = true;
                 }
             };
-            btnFiltrar.Click += (object sender, System.EventArgs e) => { SetParams(); };
+            btnFiltrar.Click += (sender, e) => { SetParams(); };
 
-            btnDetalhes.Click += (object sender, System.EventArgs e) => { SetDetails(); };
+            btnDetalhes.Click += (sender, e) => { SetDetails(); };
 
-            btnLimpar.Click += (object sender, System.EventArgs e) =>
+            btnLimpar.Click += (sender, e) =>
             {
                 DataGridViewsExecuteClear();
                 dataGridViewCliente.Enabled = false;
@@ -205,10 +203,10 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao
                     using (var connectionManager = new SqlConnManager())
                     {
                         SqlConnection connection = connectionManager.GetConnection();
-                        _Itens = _orcItensProvider.ListOrcItens(connection, selectedOrcIds);
-                        _Fin = _orcFinProvider.ListOrcFin(connection, selectedOrcIds);
-                        dataGridViewItens.DataSource = _Itens;
-                        dataGridViewFinan.DataSource = _Fin;
+                        _itens = _orcItensProvider.ListOrcItens(connection, selectedOrcIds);
+                        _fin = _orcFinProvider.ListOrcFin(connection, selectedOrcIds);
+                        dataGridViewItens.DataSource = _itens;
+                        dataGridViewFinan.DataSource = _fin;
                         btnLimpar.Enabled = true;
                         InitializeDataGridViewItens();
                         InitializeDataGridViewFinan();
@@ -225,10 +223,10 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao
                     using (var connectionManager = new SqlConnManager())
                     {
                         SqlConnection connection = connectionManager.GetConnection();
-                        _Itens = _pedItensProvider.ListPedItens(connection, selectedPedIds);
-                        _Fin = _pedFinProvider.ListPedFin(connection, selectedPedIds);
-                        dataGridViewItens.DataSource = _Itens;
-                        dataGridViewFinan.DataSource = _Fin;
+                        _itens = _pedItensProvider.ListPedItens(connection, selectedPedIds);
+                        _fin = _pedFinProvider.ListPedFin(connection, selectedPedIds);
+                        dataGridViewItens.DataSource = _itens;
+                        dataGridViewFinan.DataSource = _fin;
                         btnLimpar.Enabled = true;
                         InitializeDataGridViewItens();
                         InitializeDataGridViewFinan();
@@ -245,10 +243,10 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao
                     using (var connectionManager = new SqlConnManager())
                     {
                         SqlConnection connection = connectionManager.GetConnection();
-                        _Itens = _fatItensProvider.ListFatItens(connection, selectedFatIds);
-                        _Fin = _fatFinProvider.ListFatFin(connection, selectedFatIds);
-                        dataGridViewItens.DataSource = _Itens;
-                        dataGridViewFinan.DataSource = _Fin;
+                        _itens = _fatItensProvider.ListFatItens(connection, selectedFatIds);
+                        _fin = _fatFinProvider.ListFatFin(connection, selectedFatIds);
+                        dataGridViewItens.DataSource = _itens;
+                        dataGridViewFinan.DataSource = _fin;
                         btnLimpar.Enabled = true;
                         InitializeDataGridViewItens();
                         InitializeDataGridViewFinan();
@@ -345,7 +343,7 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao
             DataGridViewTextBoxColumn descColumn = new DataGridViewTextBoxColumn
             {
                 Name = "Descricao",
-                HeaderText = "Descricao",
+                HeaderText = "Descrição",
                 DataPropertyName = "Descricao",
                 DisplayIndex = 1
             };
@@ -353,7 +351,7 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao
             DataGridViewTextBoxColumn clienteColumn = new DataGridViewTextBoxColumn
             {
                 Name = "NumPed",
-                HeaderText = "Número",
+                HeaderText = "Número Pedido",
                 DataPropertyName = "NumPed",
                 DisplayIndex = 2
             };
@@ -387,7 +385,7 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao
             DataGridViewTextBoxColumn dataColumn = new DataGridViewTextBoxColumn
             {
                 Name = "DataEmi",
-                HeaderText = "Descricao",
+                HeaderText = "Data Emissão",
                 DataPropertyName = "DataEmi",
                 DisplayIndex = 2
             };
@@ -404,7 +402,7 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao
             DataGridViewTextBoxColumn clienteColumn = new DataGridViewTextBoxColumn
             {
                 Name = "NumPed",
-                HeaderText = "Número",
+                HeaderText = "Número Pedido",
                 DataPropertyName = "NumPed",
                 DisplayIndex = 4
             };
@@ -428,8 +426,8 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao
         private void ClearControls()
         {
             _orcpedfat.Clear();
-            _Itens.Clear();
-            _Fin.Clear();
+            _itens.Clear();
+            _fin.Clear();
         }
 
         private void ClearLabels(params Label[] labels)

@@ -8,10 +8,10 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao.Providers.Faturamen
 {
     public class FatListProvider
     {
-        public List<OrcamentoPedidoFaturamento> ListFaturamentos(SqlConnection connection, List<string> clienteIds,
+        public List<OrcPedFat> ListFaturamentos(SqlConnection connection, List<string> clienteIds,
             List<string> status, DateTime? dataInicio, DateTime? dataFim)
         {
-            List<OrcamentoPedidoFaturamento> faturamentos = new List<OrcamentoPedidoFaturamento>();
+            List<OrcPedFat> faturamentos = new List<OrcPedFat>();
 
             using (SqlCommand commands = new SqlCommand())
             {
@@ -42,7 +42,7 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao.Providers.Faturamen
 
                 while (leitor.Read())
                 {
-                    var faturamento = new OrcamentoPedidoFaturamento();
+                    var faturamento = new OrcPedFat();
                     faturamento.NumPedido = leitor["NumPedido"].ToString();
                     faturamento.Cliente = leitor["cdcliente"].ToString();
                     faturamentos.Add(faturamento);

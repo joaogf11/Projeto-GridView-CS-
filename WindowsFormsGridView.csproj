@@ -71,7 +71,7 @@
     <Compile Include="ViewModels\Cliente.cs" />
     <Compile Include="ViewModels\Finan.cs" />
     <Compile Include="ViewModels\Itens.cs" />
-    <Compile Include="ViewModels\OrcamentoPedidoFaturamento.cs" />
+    <Compile Include="ViewModels\OrcPedFat.cs" />
     <EmbeddedResource Include="GridViewListCliOrcPedFat_Joao\GridViewListaClienteOrcPedFat.resx">
       <DependentUpon>GridViewListaClienteOrcPedFat.cs</DependentUpon>
     </EmbeddedResource>

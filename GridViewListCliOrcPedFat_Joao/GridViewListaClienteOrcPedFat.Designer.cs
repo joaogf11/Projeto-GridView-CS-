@@ -89,6 +89,7 @@
             // chkPed
             // 
             this.chkPed.AutoSize = true;
+            this.chkPed.Enabled = false;
             this.chkPed.Location = new System.Drawing.Point(0, 43);
             this.chkPed.Name = "chkPed";
             this.chkPed.Size = new System.Drawing.Size(64, 17);
@@ -99,6 +100,7 @@
             // chkOrc
             // 
             this.chkOrc.AutoSize = true;
+            this.chkOrc.Enabled = false;
             this.chkOrc.Location = new System.Drawing.Point(0, 20);
             this.chkOrc.Name = "chkOrc";
             this.chkOrc.Size = new System.Drawing.Size(83, 17);
@@ -109,6 +111,7 @@
             // chkFat
             // 
             this.chkFat.AutoSize = true;
+            this.chkFat.Enabled = false;
             this.chkFat.Location = new System.Drawing.Point(0, 66);
             this.chkFat.Name = "chkFat";
             this.chkFat.Size = new System.Drawing.Size(90, 17);

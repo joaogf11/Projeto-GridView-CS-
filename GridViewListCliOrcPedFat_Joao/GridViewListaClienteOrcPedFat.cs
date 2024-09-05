@@ -34,21 +34,21 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao
             chkOrc.CheckedChanged += (sender, e) =>
             {
                 CheckboxStateUpdate(chkOrc);
-                btnFiltrar.Enabled = true;
+                if (chkCliente.Checked || chkSts.Checked || chkData.Checked) btnFiltrar.Enabled = true;
                 if (!chkOrc.Checked) btnFiltrar.Enabled = false;
             };
 
             chkPed.CheckedChanged += (sender, e) =>
             {
                 CheckboxStateUpdate(chkPed);
-                btnFiltrar.Enabled = true;
+                if (chkCliente.Checked || chkSts.Checked || chkData.Checked) btnFiltrar.Enabled = true;
                 if (!chkPed.Checked) btnFiltrar.Enabled = false;
             };
 
             chkFat.CheckedChanged += (sender, e) =>
             {
                 CheckboxStateUpdate(chkFat);
-                btnFiltrar.Enabled = true;
+                if (chkCliente.Checked || chkSts.Checked || chkData.Checked) btnFiltrar.Enabled = true;
                 if (!chkFat.Checked) btnFiltrar.Enabled = false;
             };
             chkCliente.CheckedChanged += (sender, e) =>
@@ -57,6 +57,9 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao
                 LoadClients();
                 chkSts.Enabled = false;
                 chkData.Enabled = false;
+                chkOrc.Enabled = true;
+                chkFat.Enabled = true;
+                chkPed.Enabled = true;
                 if (!chkCliente.Checked)
                 {
                     dataGridViewCliente.Enabled = false;
@@ -65,6 +68,9 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao
                     chkSts.Enabled = true;
                     chkData.Enabled = true;
                     chkCliente.Enabled = true;
+                    chkOrc.Enabled = false;
+                    chkFat.Enabled = false;
+                    chkPed.Enabled = false;
                 }
             };
             chkSts.CheckedChanged += (sender, e) =>
@@ -73,6 +79,9 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao
                 chkAbt.Enabled = true;
                 chkCliente.Enabled = false;
                 chkData.Enabled = false;
+                chkOrc.Enabled = true;
+                chkFat.Enabled = true;
+                chkPed.Enabled = true;
                 if (!chkSts.Checked)
                 {
                     chkEnc.Enabled = false;
@@ -81,6 +90,9 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao
                     chkAbt.Checked = false;
                     chkCliente.Enabled = true;
                     chkData.Enabled = true;
+                    chkOrc.Enabled = false;
+                    chkFat.Enabled = false;
+                    chkPed.Enabled = false;
                 }
             };
             chkData.CheckedChanged += (sender, e) =>
@@ -89,6 +101,9 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao
                 dtTimeFim.Enabled = true;
                 chkCliente.Enabled = false;
                 chkSts.Enabled = false;
+                chkOrc.Enabled = true;
+                chkFat.Enabled = true;
+                chkPed.Enabled = true;
                 if (!chkData.Checked)
                 {
                     dtTimeFim.Enabled = false;
@@ -97,9 +112,21 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao
                     dtTimeIni.Value = DateTime.Today;
                     chkCliente.Enabled = true;
                     chkSts.Enabled = true;
+                    chkOrc.Enabled = false;
+                    chkFat.Enabled = false;
+                    chkPed.Enabled = false;
                 }
             };
-            btnFiltrar.Click += (sender, e) => { SetParams(); };
+            btnFiltrar.Click += (sender, e) =>
+            {
+                var lista = new List<string>();
+                foreach (var cliente in _clientes)
+                    if (cliente.IsSelected)
+                        lista.Add(cliente.CdCliente);
+                if (lista.Any()) SetParams();
+                if (chkAbt.Checked || chkEnc.Checked) SetParams();
+                if (chkData.Checked) SetParams();
+            };
 
             btnDetalhes.Click += (sender, e) => { SetDetails(); };
 
@@ -178,6 +205,7 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao
                 }
 
                 btnDetalhes.Enabled = true;
+                btnLimpar.Enabled = true;
                 InitializeDataGridViewFiltros();
             }
         }
@@ -196,7 +224,6 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao
                         _fin = _orcFinProvider.ListOrcFin(connection, selectedOrcIds);
                         dataGridViewItens.DataSource = _itens;
                         dataGridViewFinan.DataSource = _fin;
-                        btnLimpar.Enabled = true;
                         InitializeDataGridViewItens();
                         InitializeDataGridViewFinan();
                     }
@@ -214,7 +241,6 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao
                         _fin = _pedFinProvider.ListPedFin(connection, selectedPedIds);
                         dataGridViewItens.DataSource = _itens;
                         dataGridViewFinan.DataSource = _fin;
-                        btnLimpar.Enabled = true;
                         InitializeDataGridViewItens();
                         InitializeDataGridViewFinan();
                     }
@@ -232,7 +258,6 @@ namespace WindowsFormsGridView.GridViewListCliOrcPedFat_Joao
                         _fin = _fatFinProvider.ListFatFin(connection, selectedFatIds);
                         dataGridViewItens.DataSource = _itens;
                         dataGridViewFinan.DataSource = _fin;
-                        btnLimpar.Enabled = true;
                         InitializeDataGridViewItens();
                         InitializeDataGridViewFinan();
                     }
